@@ -5,4 +5,7 @@
 
 .App > div {
   margin-right: 50px;
+  background-color: aliceblue;
+  border-radius: 10px;
+  font-family: "PF BeauSans Pro", sans-serif;
 }
