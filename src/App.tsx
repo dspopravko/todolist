@@ -22,12 +22,13 @@ function App() {
     }
 
     function addTask(title: string) {
-        let newTask : TaskType = {
-            id: v1(),
-            title: title,
-            isDone: false
-        }
-        setTasks([newTask, ...tasks])
+        setTasks([{
+            id: v1(), title, isDone: false
+        }, ...tasks])
+    }
+
+    function changeStatus (id: string, isDone: boolean) {
+        setTasks(tasks.map(t => t.id !== id ? t : {...t, isDone}))
     }
 
     function changeFilter(value: FilterValuesType) {
@@ -47,11 +48,13 @@ function App() {
     return (
         <div className="App">
             <Todolist
+                filter={filter}
                 title={title1}
                 tasks={tasksForTodoList}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTask={addTask}
+                changeStatus={changeStatus}
             />
         </div>
     );

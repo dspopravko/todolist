@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box
+}
 .App {
   padding: 30px;
   display: flex;
@@ -8,4 +11,24 @@
   background-color: aliceblue;
   border-radius: 10px;
   font-family: "PF BeauSans Pro", sans-serif;
+}
+
+.isDone {
+  color: hotpink;
+  font-weight: bold;
+  text-decoration: line-through;
+}
+
+.btn {
+  margin-right: 2px;
+}
+
+.btn-active {
+  background-color: hotpink;
+  color: white;
+  border: 2px solid hotpink;
+  border-radius: 3px;
+}
+.error {
+  border: 2px solid hotpink;
 }
