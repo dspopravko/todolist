@@ -1,0 +1,14 @@
+.todolist {
+    flex: 0 1 auto;
+    padding: 30px;
+    width: 320px;
+}
+.editWrapper {
+    float: right;
+}
+.task {
+    display: flex;
+}
+.btnWrapper {
+    margin-left: 6px;
+}
