@@ -1,43 +1,22 @@
 * {
   box-sizing: border-box
 }
-.App {
-  padding: 30px;
-  width: 100%;
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
+/*.App {*/
+/*  padding: 30px;*/
+/*  width: 100%;*/
+/*  display: flex;*/
+/*  gap: 16px;*/
+/*  flex-wrap: wrap;*/
+/*}*/
 
-.App > div {
-  background-color: #f8fff0;
-  border-radius: 10px;
-  font-family: "PF BeauSans Pro", sans-serif;
-}
+/*.App > div {*/
+/*  background-color: #f8fff0;*/
+/*  border-radius: 10px;*/
+/*  font-family: "PF BeauSans Pro", sans-serif;*/
+/*}*/
 
 .isDone {
   color: hotpink;
   font-weight: bold;
   text-decoration: line-through;
-}
-
-.btn {
-  margin-right: 2px;
-  width: 80px;
-  height: 25px;
-  background-color: #cfe3f3;
-  border: none;
-}
-.btn:hover {
-  font-weight: bold;
-}
-
-.btn-active {
-  background-color: hotpink;
-  color: white;
-  border: none;
-  border-radius: 3px;
-}
-.error {
-  border: 2px solid hotpink;
 }

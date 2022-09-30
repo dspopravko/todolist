@@ -8,6 +8,8 @@
 }
 .task {
     display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 .btnWrapper {
     margin-left: 6px;

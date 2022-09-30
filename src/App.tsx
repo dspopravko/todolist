@@ -4,6 +4,8 @@ import './App.css';
 import {TaskType} from "./Todolist";
 import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
+import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
+import {Menu} from "@material-ui/icons";
 
 export type FilterValuesType = "all" | "completed" | "active"
 
@@ -30,51 +32,46 @@ function App() {
     ])
     let [alltasks, setAlltasks] = useState<TasksStateType>({
         [todolistId1]: [
-            { id: v1(), title: "HTML&CSS", isDone: true},
-            { id: v1(), title: "JS", isDone: true},
-            { id: v1(), title: "ReactJS", isDone: false},
-            { id: v1(), title: "ReactReactive", isDone: true}
+            {id: v1(), title: "HTML&CSS", isDone: true},
+            {id: v1(), title: "JS", isDone: true},
+            {id: v1(), title: "ReactJS", isDone: false},
+            {id: v1(), title: "ReactReactive", isDone: true}
         ],
         [todolistId2]: [
-            { id: v1(), title: "Soup", isDone: false},
-            { id: v1(), title: "Chicken Salad", isDone: true},
-            { id: v1(), title: "Tosts", isDone: false},
-            { id: v1(), title: "Beans", isDone: true}
+            {id: v1(), title: "Soup", isDone: false},
+            {id: v1(), title: "Chicken Salad", isDone: true},
+            {id: v1(), title: "Tosts", isDone: false},
+            {id: v1(), title: "Beans", isDone: true}
         ],
         [todolistId3]: [
-            { id: v1(), title: "Life and Fate", isDone: false},
-            { id: v1(), title: "Geschichte eines Deutschen", isDone: true},
-            { id: v1(), title: "The Autumn of the Patriarch", isDone: false},
-            { id: v1(), title: "Lord of the Flies", isDone: true}
+            {id: v1(), title: "Life and Fate", isDone: false},
+            {id: v1(), title: "Geschichte eines Deutschen", isDone: true},
+            {id: v1(), title: "The Autumn of the Patriarch", isDone: false},
+            {id: v1(), title: "Lord of the Flies", isDone: true}
         ],
     })
 
-    function removeTask (taskID: string, tdID: string) {
-        alltasks[tdID] = alltasks[tdID].filter( t => t.id !== taskID)
+    function removeTask(taskID: string, tdID: string) {
+        alltasks[tdID] = alltasks[tdID].filter(t => t.id !== taskID)
         setAlltasks({...alltasks})
     }
-
     function addTask(title: string, tdID: string) {
         const task = {id: v1(), title: title, isDone: false}
         alltasks[tdID] = [task, ...alltasks[tdID]]
         setAlltasks({...alltasks})
     }
-
-    function changeStatus (id: string, isDone: boolean, tdID: string) {
+    function changeStatus(id: string, isDone: boolean, tdID: string) {
         alltasks[tdID] = alltasks[tdID].map(t => t.id !== id ? t : {...t, isDone})
         setAlltasks({...alltasks})
     }
-
-    function changeTitle (taskID: string, title: string, tdID: string) {
+    function changeTitle(taskID: string, title: string, tdID: string) {
         alltasks[tdID] = alltasks[tdID].map(t => t.id !== taskID ? t : {...t, title})
         setAlltasks({...alltasks})
     }
-
-    function changeTdTitle (tdID: string, title: string) {
-        const newtodolists = todolists.map(t => t.id !== tdID ? t : {...t, title} )
+    function changeTdTitle(tdID: string, title: string) {
+        const newtodolists = todolists.map(t => t.id !== tdID ? t : {...t, title})
         setTodilists(newtodolists)
     }
-
     function changeFilter(value: FilterValuesType, tdID: string) {
         let todolist = todolists.find(tl => tl.id === tdID);
         if (todolist) {
@@ -82,7 +79,7 @@ function App() {
             setTodilists([...todolists]);
         }
     }
-    function removeTodolist (tdID: string) {
+    function removeTodolist(tdID: string) {
         setTodilists(todolists.filter(td => td.id !== tdID))
         delete alltasks[tdID]
         setAlltasks({...alltasks})
@@ -95,42 +92,66 @@ function App() {
             color: "#f7f0ff"
         }
         setTodilists([todolist, ...todolists]);
-        setAlltasks({...alltasks,
-        [todolist.id]: []})
+        setAlltasks({
+            ...alltasks,
+            [todolist.id]: []
+        })
     }
 
     return (
         <div className="App">
-            <AddItemForm addItem={addTodolist}/>
-            {todolists.map( tl => {
-                    let tasksForTodoList = alltasks[tl.id];
+            <AppBar position="static">
+                <Toolbar style={{justifyContent: "space-between"}}>
+                    <IconButton edge="start" color="inherit" aria-label="menu">
+                        <Menu/>
+                    </IconButton>
+                    <Typography variant="h6">
+                        Todolists
+                    </Typography>
+                    <Button color="inherit">Login</Button>
+                </Toolbar>
+            </AppBar>
+            <Container fixed>
+                <Grid container style={{padding: "20px 0"}}>
+                    <AddItemForm addItem={addTodolist}/>
+                </Grid>
+                <Grid container spacing={5} justifyContent={"center"}>
+                    {todolists.map(tl => {
+                            let tasksForTodoList = alltasks[tl.id];
 
-                    switch (tl.filter) {
-                        case "completed":
-                            tasksForTodoList = alltasks[tl.id].filter(task => task.isDone)
-                            break
-                        case "active":
-                            tasksForTodoList = alltasks[tl.id].filter(task => !task.isDone)
-                    }
-            return <Todolist
-                key={tl.id}
-                tdID={tl.id}
-                filter={tl.filter}
-                title={tl.title}
-                color={tl.color}
-                tasks={tasksForTodoList}
-                removeTodolist={removeTodolist}
-                removeTask={removeTask}
-                changeFilter={changeFilter}
-                addTask={addTask}
-                changeTaskStatus={changeStatus}
-                changeTaskTitle={changeTitle}
-                changeTdTitle={changeTdTitle}
-            />
-            }
-            )}
+                            switch (tl.filter) {
+                                case "completed":
+                                    tasksForTodoList = alltasks[tl.id].filter(task => task.isDone)
+                                    break
+                                case "active":
+                                    tasksForTodoList = alltasks[tl.id].filter(task => !task.isDone)
+                            }
+                            return (
+                                <Grid item key={tl.id}>
+                                    <Paper>
+                                        <Todolist
+                                            tdID={tl.id}
+                                            filter={tl.filter}
+                                            title={tl.title}
+                                            color={tl.color}
+                                            tasks={tasksForTodoList}
+                                            removeTodolist={removeTodolist}
+                                            removeTask={removeTask}
+                                            changeFilter={changeFilter}
+                                            addTask={addTask}
+                                            changeTaskStatus={changeStatus}
+                                            changeTaskTitle={changeTitle}
+                                            changeTdTitle={changeTdTitle}
+                                        />
+                                    </Paper>
+                                </Grid>
+                            )
+                        }
+                    )}
+                </Grid>
+            </Container>
         </div>
     );
-}
 
+}
 export default App;
