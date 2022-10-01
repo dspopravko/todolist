@@ -61,16 +61,27 @@ export const Todolist = (props: PropsType) => {
                     const onChangeTitleHandler = (title: string) => {
                         props.changeTaskTitle(task.id, title, props.tdID)
                     }
+                    const style = task.isDone ?
+                        {
+                            textDecoration: "line-through",
+                            padding: "0",
+                            color: "#8fc0bc"
+                        }
+                        : {
+                            fontWeight: "bold",
+                            padding: "0",
+                            color: "#5d6c6b"
+                        }
                     return (
                         <ListItem
                             key={task.id}
                             className={task.isDone ? "isDone" : ""}
-                            style={{padding: "0"}}
+                            style={style}
                         >
                             <div className={s.task}>
                                 <div>
                                     <Checkbox
-                                        style={{color: "hotpink"}}
+                                        style={{color: "#9fc4c0"}}
                                         checked={task.isDone}
                                         onChange={onChangeStatusHandler}
                                     />

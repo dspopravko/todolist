@@ -37,7 +37,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
         />
         <IconButton
             onClick={addTask}>
-            <AddCircleIcon style={{color: "hotpink"}}/>
+            <AddCircleIcon style={{color: "#9fc4c0"}}/>
         </IconButton>
 
     </div>
