@@ -17,6 +17,7 @@ import {
 } from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {createTheme} from "@material-ui/core/styles";
+import {RemoveTodolistAC, todolistReducer} from "./reducers/todolist-reducer";
 
 const theme = createTheme({
     palette: {
@@ -34,14 +35,14 @@ const theme = createTheme({
 
 export type FilterValuesType = "all" | "completed" | "active"
 
-type TodolistType = {
+export type TodolistType = {
     id: string
     title: string
     filter: FilterValuesType
     color: string
 }
 
-type TasksStateType = {
+export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
@@ -52,8 +53,8 @@ function App() {
 
     let [todolists, setTodilists] = useState<Array<TodolistType>>([
         {id: todolistId1, title: "My learning goals", filter: "all", color: "#f0f8ff"},
-        {id: todolistId2, title: "What to cook", filter: "completed", color: "#fff7f0"},
-        {id: todolistId3, title: "What to read", filter: "completed", color: "#f7f0ff"}
+        {id: todolistId2, title: "What to cook", filter: "all", color: "#fff7f0"},
+        {id: todolistId3, title: "What to read", filter: "all", color: "#f7f0ff"}
     ])
     let [alltasks, setAlltasks] = useState<TasksStateType>({
         [todolistId1]: [
@@ -111,9 +112,10 @@ function App() {
     }
 
     function removeTodolist(tdID: string) {
-        setTodilists(todolists.filter(td => td.id !== tdID))
-        delete alltasks[tdID]
-        setAlltasks({...alltasks})
+        setTodilists(todolistReducer(todolists, RemoveTodolistAC(tdID)))
+        // setTodilists(todolists.filter(td => td.id !== tdID))
+        // delete alltasks[tdID]
+        // setAlltasks({...alltasks})
     }
 
     function addTodolist(title: string) {

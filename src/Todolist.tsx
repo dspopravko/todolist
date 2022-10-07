@@ -31,7 +31,7 @@ export type TaskType = {
 
 export const Todolist = (props: PropsType) => {
 
-    const filterHandler = (filter: FilterValuesType) => () => props.changeFilter(filter, props.tdID)
+    const filterHandlerCreator = (filter: FilterValuesType) => () => props.changeFilter(filter, props.tdID)
     const removeTodolistHandler = () => {
         props.removeTodolist(props.tdID)
     }
@@ -111,15 +111,15 @@ export const Todolist = (props: PropsType) => {
                     disableElevation>
                     <Button
                         color={props.filter === "all" ? "secondary" : "primary"}
-                        onClick={filterHandler('all')}>All
+                        onClick={filterHandlerCreator('all')}>All
                     </Button>
                     <Button
                         color={props.filter === "active" ? "secondary" : "primary"}
-                        onClick={filterHandler('active')}>Active
+                        onClick={filterHandlerCreator('active')}>Active
                     </Button>
                     <Button
                         color={props.filter === "completed" ? "secondary" : "primary"}
-                        onClick={filterHandler('completed')}>Completed
+                        onClick={filterHandlerCreator('completed')}>Completed
                     </Button>
                 </ButtonGroup>
             </div>
