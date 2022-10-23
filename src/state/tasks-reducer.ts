@@ -1,15 +1,37 @@
 import {TasksStateType} from "../App";
 import {v1} from "uuid";
 import {AddTodolistAT, RemoveTodolistAT} from "./todolist-reducer";
+import {ActionTypes} from "./store";
 
 export type removeTaskAT = ReturnType<typeof removeTaskAC>
 export type addTaskAT = ReturnType<typeof addTaskAC>
 export type changeTaskTitleAT = ReturnType<typeof changeTaskTitleAC>
 export type changeTaskStatusAT = ReturnType<typeof changeTaskStatusAC>
 
-export type actionType = removeTaskAT | addTaskAT | changeTaskTitleAT | changeTaskStatusAT | AddTodolistAT | RemoveTodolistAT
+export type tasksActionType = removeTaskAT | addTaskAT | changeTaskTitleAT | changeTaskStatusAT | AddTodolistAT | RemoveTodolistAT
 
-export const tasksReducer = (state: TasksStateType, action: actionType): TasksStateType => {
+const initialState: TasksStateType = {
+    ["todolistId1"]: [
+        {id: v1(), title: "HTML&CSS", isDone: true},
+        {id: v1(), title: "JS", isDone: true},
+        {id: v1(), title: "ReactJS", isDone: false},
+        {id: v1(), title: "ReactReactive", isDone: true}
+    ],
+    ["todolistId2"]: [
+        {id: v1(), title: "Soup", isDone: false},
+        {id: v1(), title: "Chicken Salad", isDone: true},
+        {id: v1(), title: "Tosts", isDone: false},
+        {id: v1(), title: "Beans", isDone: true}
+    ],
+    ["todolistId3"]: [
+        {id: v1(), title: "Life and Fate", isDone: false},
+        {id: v1(), title: "Geschichte eines Deutschen", isDone: true},
+        {id: v1(), title: "The Autumn of the Patriarch", isDone: false},
+        {id: v1(), title: "Lord of the Flies", isDone: true}
+    ],
+}
+
+export const tasksReducer = (state: TasksStateType = initialState, action: ActionTypes): TasksStateType => {
     switch (action.type) {
         case "REMOVE-TASK":
             return {...state,
@@ -33,7 +55,7 @@ export const tasksReducer = (state: TasksStateType, action: actionType): TasksSt
             const {[action.todolistId]: [], ...rest} = {...state}
             return rest
         default:
-            throw new Error("I don't understand this type!")
+            return state
     }
 }
 
