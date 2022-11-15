@@ -32,6 +32,10 @@ const initialState: TasksStateType = {
 }
 
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionTypes): TasksStateType => {
+    console.group('taskReducer: state then action')
+    console.log(state)
+    console.log(action)
+    console.groupEnd()
     switch (action.type) {
         case "REMOVE-TASK":
             return {...state,

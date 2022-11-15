@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {Todolist} from "./Todolist";
 import './App.css';
 import {TaskType} from "./Todolist";
@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {createTheme} from "@material-ui/core/styles";
-import {AddTodolistAC} from "./state/todolist-reducer";
+import {AddTodolistAC, TodolistType} from "./state/todolist-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 
@@ -34,15 +34,6 @@ const theme = createTheme({
     }
 })
 
-export type FilterValuesType = "all" | "completed" | "active"
-
-export type TodolistType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-    color: string
-}
-
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
@@ -52,7 +43,7 @@ function App() {
 
     const dispatch = useDispatch()
 
-    const addTodolist = (title: string) => dispatch(AddTodolistAC(title))
+    const addTodolist = useCallback((title: string) => dispatch(AddTodolistAC(title)), [dispatch])
 
     return (
         <ThemeProvider theme={theme}>
@@ -73,15 +64,14 @@ function App() {
                         <AddItemForm addItem={addTodolist}/>
                     </Grid>
                     <Grid container spacing={5} justifyContent={"center"}>
-                        {todolists.map(tl => {
+                        {todolists && todolists.map(tl => {
                                 return (
-                                    <Grid item key={tl.id}>
+                                    <Grid key={tl.tdId} item>
                                         <Paper>
                                             <Todolist
-                                                tdID={tl.id}
+                                                tdID={tl.tdId}
                                                 filter={tl.filter}
                                                 title={tl.title}
-                                                color={tl.color}
                                             />
                                         </Paper>
                                     </Grid>

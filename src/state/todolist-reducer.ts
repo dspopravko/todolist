@@ -1,4 +1,3 @@
-import {FilterValuesType, TodolistType} from "../App";
 import {v1} from "uuid";
 import {ActionTypes} from "./store";
 
@@ -22,30 +21,37 @@ export type ChangeTodolistTitleAT = {
     todolistId: string
 }
 
+export type FilterValuesType = "all" | "completed" | "active"
+
+export type TodolistType = {
+    tdId: string
+    title: string
+    filter: FilterValuesType
+}
+
 export type todolistActionType = RemoveTodolistAT | AddTodolistAT | ChangeTodolistFilterAT | ChangeTodolistTitleAT
 
 const initialState: Array<TodolistType> = [
-    {id: "todolistId1", title: "My learning goals", filter: "all", color: "#f0f8ff"},
-    {id: "todolistId2", title: "What to cook", filter: "all", color: "#fff7f0"},
-    {id: "todolistId3", title: "What to read", filter: "all", color: "#f7f0ff"}
+    {tdId: "todolistId1", title: "My learning goals", filter: "all"},
+    {tdId: "todolistId2", title: "What to cook", filter: "all"},
+    {tdId: "todolistId3", title: "What to read", filter: "all"}
 ]
 
 export const todolistReducer = (state: Array<TodolistType> = initialState, action: ActionTypes): Array<TodolistType> => {
     switch (action.type) {
         case 'REMOVE-TODOLIST':
-            return state.filter(td => td.id !== action.todolistId)
+            return state.filter(td => td.tdId !== action.todolistId)
         case 'ADD-TODOLIST':
             const newtodolist: TodolistType = {
-            id: action.id,
+                tdId: action.id,
             filter: "all",
-            title: action.title,
-            color: "#f7f0ff"
+            title: action.title
         }
             return [newtodolist, ...state];
         case 'CHANGE-TODOLIST-FILTER':
-            return state.map(tl => tl.id === action.todolistId ? {...tl, filter: action.filter} : tl)
+            return state.map(tl => tl.tdId === action.todolistId ? {...tl, filter: action.filter} : tl)
         case 'CHANGE-TODOLIST-TITLE':
-            return state.map(t => t.id !== action.todolistId ? t : {...t, title: action.title})
+            return state.map(t => t.tdId !== action.todolistId ? t : {...t, title: action.title})
         default:
             return state
     }
