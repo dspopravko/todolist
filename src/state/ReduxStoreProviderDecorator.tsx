@@ -5,20 +5,21 @@ import {todolistReducer} from "./todolist-reducer";
 import {combineReducers, legacy_createStore} from "redux";
 import {AppRootStateType} from "./store";
 import {v1} from "uuid";
+import {Priority, TaskStatus} from "../api/todolist-api";
 
-const initialGlobalState = {
+const initialGlobalState: AppRootStateType = {
     todolists: [
-        {tdId: 'todolistId1', title: 'What to learn', filter: 'all', color: "#f0f8ff"},
-        {tdId: 'todolistId2', title: 'What to buy', filter: 'all', color: "#f1fff0"}
+        {id: 'todolistId1', title: 'What to learn', filter: 'all', order: 0, addedDate: ""},
+        {id: 'todolistId2', title: 'What to buy', filter: 'all', order: 0, addedDate: "" }
     ],
     tasks: {
         ['todolistId1']: [
-            {id: v1(), title: 'HTML&CSS', isDone: false},
-            {id: v1(), title: 'JS', isDone: true}
+            {id: v1(), title: 'HTML&CSS', status: TaskStatus.New, todoListId: "todolistId1", addedDate: '', startDate: '', deadline: '', description: '', order: 0, priority: Priority.Hi},
+            {id: v1(), title: 'JS', status: TaskStatus.Completed, todoListId: "todolistId1", addedDate: '', startDate: '', deadline: '', description: '', order: 0, priority: Priority.Hi},
         ],
         ['todolistId2']: [
-            {id: v1(), title: 'Milk', isDone: true},
-            {id: v1(), title: 'React Book', isDone: true}
+            {id: v1(), title: 'Milk', status: TaskStatus.Completed, todoListId: "todolistId2", addedDate: '', startDate: '', deadline: '', description: '', order: 0, priority: Priority.Hi},
+            {id: v1(), title: 'React Book', status: TaskStatus.Completed, todoListId: "todolistId2", addedDate: '', startDate: '', deadline: '', description: '', order: 0, priority: Priority.Hi},
         ]
     }
 }
@@ -28,7 +29,7 @@ const rootReducer = combineReducers({
     todolists: todolistReducer
 })
 
-export const StoryBookStore = legacy_createStore(rootReducer, initialGlobalState as AppRootStateType);
+export const StoryBookStore = legacy_createStore(rootReducer, initialGlobalState);
 
 
 export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {
