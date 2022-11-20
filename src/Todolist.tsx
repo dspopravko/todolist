@@ -1,19 +1,20 @@
-import React, {memo, useCallback} from "react";
-import s from "./todolis.module.css"
+import React, {memo, useCallback, useEffect} from "react";
+import s from "./Todolist.module.css"
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {Button, ButtonGroup, Checkbox, IconButton, List, ListItem} from "@material-ui/core";
+import {Button, ButtonGroup, IconButton, List} from "@material-ui/core";
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./state/store";
+import {useSelector} from "react-redux";
+import {AppRootStateType, useAppDispatch} from "./state/store";
 import {
     ChangeTodolistFilterAC,
     ChangeTodolistTitleAC,
     FilterValuesType,
     RemoveTodolistAC
 } from "./state/todolist-reducer";
-import {addTaskAC} from "./state/tasks-reducer";
+import {addTask, getTasksTC} from "./state/tasks-reducer";
 import {Task} from "./Task";
+import {TaskType} from "./api/todolist-api";
 
 type PropsType = {
     tdID: string
@@ -21,26 +22,25 @@ type PropsType = {
     filter: FilterValuesType
 }
 
-export type TaskType = {
-    id: string,
-    title: string,
-    isDone: boolean
-}
-
 export const Todolist = memo(({tdID, filter, title}: PropsType) => {
     console.log('Todolist ' + tdID + ' rendered')
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(getTasksTC(tdID))
+    }, [])
 
     let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[tdID])
-    const dispatch = useDispatch()
+    console.log('tasks ', tasks)
 
     let filteredTasks: Array<TaskType>
 
     switch (filter) {
         case "completed":
-            filteredTasks = tasks.filter(task => task.isDone)
+            filteredTasks = tasks.filter(task => task.status === 2)
             break
         case "active":
-            filteredTasks = tasks.filter(task => !task.isDone)
+            filteredTasks = tasks.filter(task => task.status !== 2)
             break
         default:
             filteredTasks = tasks
@@ -48,7 +48,7 @@ export const Todolist = memo(({tdID, filter, title}: PropsType) => {
 
     const filterHandlerCreator = (filter: FilterValuesType) => () => dispatch(ChangeTodolistFilterAC(filter, tdID))
     const removeTodolistHandler = () => dispatch(RemoveTodolistAC(tdID))
-    const addTaskHandler = useCallback((title: string) => dispatch(addTaskAC(tdID, title)), [tdID])
+    const addTaskHandler = useCallback((title: string) => dispatch(addTask(tdID, title)), [tdID])
     const onChangeTitleHandler = (title: string) => dispatch(ChangeTodolistTitleAC(title, tdID))
 
     return (
@@ -64,13 +64,21 @@ export const Todolist = memo(({tdID, filter, title}: PropsType) => {
             </h3>
             <AddItemForm addItem={addTaskHandler}/>
             <List>
-                {filteredTasks && filteredTasks.map(task => {
+                {filteredTasks?.map(task => {
                     return <Task
                         key={task.id}
                         id={task.id}
                         title={task.title}
-                        tdId={tdID}
-                        isDone={task.isDone}
+                        todoId={tdID}
+                        status={task.status}
+                        description={task.description}
+                        addedDate={task.addedDate}
+                        deadline={task.deadline}
+                        todoListId={task.todoListId}
+                        order={task.order}
+                        priority={task.priority}
+                        startDate={task.startDate}
+
                     />
                 })}
             </List>

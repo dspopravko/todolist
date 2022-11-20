@@ -1,7 +1,6 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {Todolist} from "./Todolist";
 import './App.css';
-import {TaskType} from "./Todolist";
 import {AddItemForm} from "./AddItemForm";
 import {
     AppBar,
@@ -16,9 +15,8 @@ import {
 } from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {createTheme} from "@material-ui/core/styles";
-import {AddTodolistAC, TodolistType} from "./state/todolist-reducer";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./state/store";
+import {AddTodolistAC, getTodolitsTC, TodolistType} from "./state/todolist-reducer";
+import {useAppDispatch, useAppSelector} from "./state/store";
 
 const theme = createTheme({
     palette: {
@@ -34,16 +32,16 @@ const theme = createTheme({
     }
 })
 
-export type TasksStateType = {
-    [key: string]: Array<TaskType>
-}
-
 function App() {
-    let todolists = useSelector<AppRootStateType, Array<TodolistType>>(state => state.todolists)
+    let todolists = useAppSelector<Array<TodolistType>>(state => state.todolists)
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const addTodolist = useCallback((title: string) => dispatch(AddTodolistAC(title)), [dispatch])
+
+    useEffect(() => {
+        dispatch(getTodolitsTC())
+    }, [])
 
     return (
         <ThemeProvider theme={theme}>
@@ -64,12 +62,12 @@ function App() {
                         <AddItemForm addItem={addTodolist}/>
                     </Grid>
                     <Grid container spacing={5} justifyContent={"center"}>
-                        {todolists && todolists.map(tl => {
+                        {todolists?.map(tl => {
                                 return (
-                                    <Grid key={tl.tdId} item>
+                                    <Grid key={tl.id} item>
                                         <Paper>
                                             <Todolist
-                                                tdID={tl.tdId}
+                                                tdID={tl.id}
                                                 filter={tl.filter}
                                                 title={tl.title}
                                             />

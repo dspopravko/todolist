@@ -1,23 +1,27 @@
 import React, {ChangeEvent, memo} from 'react';
 import {Checkbox, IconButton, ListItem} from "@material-ui/core";
-import s from "./Task.module.css";
+import s from "./Task.module.css"
 import {EditableSpan} from "./EditableSpan";
 import BackspaceIcon from "@material-ui/icons/Backspace";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
-import {TaskType} from "./Todolist";
-import {TodolistType} from "./state/todolist-reducer";
-import {useDispatch} from "react-redux";
+import {changeTaskTitleAC, removeTask, updateTask} from "./state/tasks-reducer";
+import {TaskStatus, TaskType} from "./api/todolist-api";
+import {useAppDispatch} from "./state/store";
 
-export type TaskPropsType = TaskType & Pick<TodolistType, 'tdId'>
+export type TaskPropsType = TaskType & { todoId: string }
 
-export const Task = memo(({title, id: taskId, isDone, tdId: todoId}: TaskPropsType) => {
-    const dispatch = useDispatch()
+export const Task = memo(({title, id, status, todoId, todoListId, deadline, order, priority, description, startDate, addedDate}: TaskPropsType) => {
+    const dispatch = useAppDispatch()
 
-    const onRemoveHandler = () => dispatch(removeTaskAC(taskId, todoId))
-    const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => dispatch(changeTaskStatusAC(todoId, taskId, e.currentTarget.checked))
-    const onChangeTitleHandler = (title: string) => dispatch(changeTaskTitleAC(todoId, taskId, title))
+    const onRemoveHandler = () => {
+        dispatch(removeTask(todoId, id))
+    }
+    const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
+        dispatch(updateTask(todoId, id, status))
+    }
+    const onChangeTitleHandler = (title: string) => dispatch(changeTaskTitleAC(todoId, id, title))
 
-    const style = isDone ?
+    const style = status === TaskStatus.Completed?
         {
             textDecoration: "line-through",
             padding: "0",
@@ -31,15 +35,15 @@ export const Task = memo(({title, id: taskId, isDone, tdId: todoId}: TaskPropsTy
 
     return (
         <ListItem
-            key={taskId}
-            className={isDone ? "isDone" : ""}
+            key={id}
+            className={status === TaskStatus.Completed ? "isDone" : ""}
             style={style}
         >
             <div className={s.task}>
                 <div>
                     <Checkbox
                         style={{color: "#9fc4c0"}}
-                        checked={isDone}
+                        checked={status === TaskStatus.Completed}
                         onChange={onChangeStatusHandler}
                     />
                 </div>

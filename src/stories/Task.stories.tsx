@@ -4,7 +4,7 @@ import {Task} from "../Task";
 import {ReduxStoreProviderDecorator} from "../state/ReduxStoreProviderDecorator";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../state/store";
-import {TaskType} from "../Todolist";
+import {TaskType} from "../api/todolist-api";
 
 
 export default {
@@ -15,10 +15,18 @@ export default {
 
 const TaskWithRedux = () => {
     const task = useSelector<AppRootStateType, TaskType>(state => state.tasks['todolistId1'][0])
-    return <Task tdId='todolistId1'
+    return <Task key={task.id}
                  id={task.id}
                  title={task.title}
-                 isDone={task.isDone}
+                 todoId={'todolistId1'}
+                 status={task.status}
+                 description={task.description}
+                 addedDate={task.addedDate}
+                 deadline={task.deadline}
+                 todoListId={task.todoListId}
+                 order={task.order}
+                 priority={task.priority}
+                 startDate={task.startDate}
     />
 }
 
