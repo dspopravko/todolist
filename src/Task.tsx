@@ -3,7 +3,7 @@ import {Checkbox, IconButton, ListItem} from "@material-ui/core";
 import s from "./Task.module.css"
 import {EditableSpan} from "./EditableSpan";
 import BackspaceIcon from "@material-ui/icons/Backspace";
-import {changeTaskTitleAC, removeTask, updateTask} from "./state/tasks-reducer";
+import {changeTaskTitleAC, removeTaskTC, updateTaskTC} from "./state/tasks-reducer";
 import {TaskStatus, TaskType} from "./api/todolist-api";
 import {useAppDispatch} from "./state/store";
 
@@ -13,11 +13,11 @@ export const Task = memo(({title, id, status, todoId, todoListId, deadline, orde
     const dispatch = useAppDispatch()
 
     const onRemoveHandler = () => {
-        dispatch(removeTask(todoId, id))
+        dispatch(removeTaskTC(todoId, id))
     }
     const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
-        dispatch(updateTask(todoId, id, status))
+        dispatch(updateTaskTC(todoId, id, status))
     }
     const onChangeTitleHandler = (title: string) => dispatch(changeTaskTitleAC(todoId, id, title))
 
