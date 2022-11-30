@@ -1,29 +1,30 @@
 import React, {memo, useCallback, useEffect} from "react";
 import s from "./Todolist.module.css"
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditableSpan";
+import {AddItemForm} from "../../components/AppItemForm/AddItemForm";
+import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
 import {Button, ButtonGroup, IconButton, List} from "@material-ui/core";
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import {useSelector} from "react-redux";
-import {AppRootStateType, useAppDispatch} from "./state/store";
+import {AppRootStateType, useAppDispatch} from "../../app/store";
 import {
     ChangeTodolistFilterAC,
-    ChangeTodolistTitleAC,
+    changeTodolistTitleTC,
     FilterValuesType,
-    RemoveTodolistAC
-} from "./state/todolist-reducer";
-import {addTaskTC, getTasksTC} from "./state/tasks-reducer";
+    removeTodolistTC
+} from "../../state/todolist-reducer";
+import {addTaskTC, getTasksTC} from "../../state/tasks-reducer";
 import {Task} from "./Task";
-import {TaskType} from "./api/todolist-api";
+import {TaskType} from "../../api/todolist-api";
+import {entityStatus} from "../../state/app-reducer";
 
 type PropsType = {
     tdID: string
     title: string
     filter: FilterValuesType
+    entityStatus: entityStatus
 }
 
-export const Todolist = memo(({tdID, filter, title}: PropsType) => {
-    console.log('Todolist ' + tdID + ' rendered')
+export const Todolist = memo(({tdID, filter, title, entityStatus: status}: PropsType) => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -31,8 +32,6 @@ export const Todolist = memo(({tdID, filter, title}: PropsType) => {
     }, [])
 
     let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[tdID])
-    console.log('tasks ', tasks)
-
     let filteredTasks: Array<TaskType>
 
     switch (filter) {
@@ -47,14 +46,15 @@ export const Todolist = memo(({tdID, filter, title}: PropsType) => {
     }
 
     const filterHandlerCreator = (filter: FilterValuesType) => () => dispatch(ChangeTodolistFilterAC(filter, tdID))
-    const removeTodolistHandler = () => dispatch(RemoveTodolistAC(tdID))
-    const addTaskHandler = useCallback((title: string) => dispatch(addTaskTC(tdID, title)), [tdID])
-    const onChangeTitleHandler = (title: string) => dispatch(ChangeTodolistTitleAC(title, tdID))
+    const removeTodolistHandler = () => dispatch(removeTodolistTC(tdID))
+    const addTaskHandler = useCallback((title: string) => dispatch(addTaskTC(title, tdID)), [tdID])
+    const onChangeTitleHandler = (title: string) => dispatch(changeTodolistTitleTC(tdID, title))
 
     return (
         <div className={s.todolist}>
             <div className={s.editWrapper}>
                 <IconButton
+                    disabled={status === entityStatus.loading}
                     onClick={removeTodolistHandler}>
                     <HighlightOffIcon/>
                 </IconButton>
@@ -62,7 +62,10 @@ export const Todolist = memo(({tdID, filter, title}: PropsType) => {
             <h3>
                 <EditableSpan title={title} onChange={onChangeTitleHandler}/>
             </h3>
-            <AddItemForm addItem={addTaskHandler}/>
+            <AddItemForm
+                disabled={status === entityStatus.loading}
+                addItem={addTaskHandler}
+            />
             <List>
                 {filteredTasks?.map(task => {
                     return <Task
@@ -78,7 +81,7 @@ export const Todolist = memo(({tdID, filter, title}: PropsType) => {
                         order={task.order}
                         priority={task.priority}
                         startDate={task.startDate}
-
+                        tdStatus={status}
                     />
                 })}
             </List>

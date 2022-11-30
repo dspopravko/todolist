@@ -1,8 +1,8 @@
 import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import {AddItemForm} from "../AddItemForm"
+import {AddItemForm} from "../components/AppItemForm/AddItemForm"
 import {action} from "@storybook/addon-actions"
-import s from "../AddItemForm.module.css";
+import s from "../components/AppItemForm/AddItemForm.module.css";
 import {IconButton, TextField} from "@material-ui/core";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 

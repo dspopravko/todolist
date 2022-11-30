@@ -1,15 +1,16 @@
 import React, {ChangeEvent, memo} from 'react';
 import {Checkbox, IconButton, ListItem} from "@material-ui/core";
 import s from "./Task.module.css"
-import {EditableSpan} from "./EditableSpan";
+import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
 import BackspaceIcon from "@material-ui/icons/Backspace";
-import {changeTaskTitleAC, removeTaskTC, updateTaskTC} from "./state/tasks-reducer";
-import {TaskStatus, TaskType} from "./api/todolist-api";
-import {useAppDispatch} from "./state/store";
+import {removeTaskTC, updateTaskTC} from "../../state/tasks-reducer";
+import {TaskStatus, TaskType} from "../../api/todolist-api";
+import {useAppDispatch} from "../../app/store";
+import {entityStatus} from "../../state/app-reducer";
 
-export type TaskPropsType = TaskType & { todoId: string }
+export type TaskPropsType = TaskType & { todoId: string, tdStatus: entityStatus }
 
-export const Task = memo(({title, id, status, todoId, todoListId, deadline, order, priority, description, startDate, addedDate}: TaskPropsType) => {
+export const Task = memo(({title, id, status, todoId, tdStatus, ...props}: TaskPropsType) => {
     const dispatch = useAppDispatch()
 
     const onRemoveHandler = () => {
@@ -17,9 +18,11 @@ export const Task = memo(({title, id, status, todoId, todoListId, deadline, orde
     }
     const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
-        dispatch(updateTaskTC(todoId, id, status))
+        dispatch(updateTaskTC(todoId, id, status, title))
     }
-    const onChangeTitleHandler = (title: string) => dispatch(changeTaskTitleAC(todoId, id, title))
+    const onChangeTitleHandler = (title: string) => {
+        dispatch(updateTaskTC(todoId, id, status, title))
+}
 
     const style = status === TaskStatus.Completed?
         {
@@ -49,7 +52,9 @@ export const Task = memo(({title, id, status, todoId, todoListId, deadline, orde
                 </div>
                 <div>
                     <EditableSpan title={title}
-                                  onChange={onChangeTitleHandler}/>
+                                  onChange={onChangeTitleHandler}
+                                  disabled={tdStatus === entityStatus.loading}
+                    />
                 </div>
                 <div className={s.btnWrapper}>
                     <IconButton

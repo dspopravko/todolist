@@ -5,9 +5,10 @@ import {IconButton, TextField} from "@material-ui/core";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
 
-export const AddItemForm = ({addItem}: AddItemFormPropsType) => {
+export const AddItemForm = ({addItem, disabled = false}: AddItemFormPropsType) => {
     const [input, setInput] = useState("")
     const [error, setError] = useState<boolean>(false)
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -18,6 +19,7 @@ export const AddItemForm = ({addItem}: AddItemFormPropsType) => {
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => e.ctrlKey && e.key === 'Enter' && addTask()
 
     const addTask = useCallback(() => {
+        if (disabled) return
         const mInput = input.trim()
         mInput ? addItem(mInput) : setError(true)
         setInput("")
@@ -37,7 +39,7 @@ export const AddItemForm = ({addItem}: AddItemFormPropsType) => {
         />
         <IconButton
             onClick={addTask}>
-            <AddCircleIcon style={{color: "#9fc4c0"}}/>
+            <AddCircleIcon style={disabled? {color: "#bdbdbd"}: {color: "#87c9c2"}}/>
         </IconButton>
 
     </div>

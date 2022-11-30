@@ -44,7 +44,7 @@ export type TaskType =
         todoListId: string
     }
 
-type ResponseType<T = {}> = {
+export type ResponseType<T = {}> = {
     data: T
     fieldsErrors: string[]
     messages: string[]
@@ -70,13 +70,13 @@ export const todolistAPI = {
         return instance.get<tdType[]>('todo-lists')
     },
     createTodolist(title: string) {
-        return instance.post<ResponseType<{ item: tdType }>>('todo-lists', {title})
+        return instance.post<{ title: string }, AxiosResponse<ResponseType<{ item: tdType }>>>('todo-lists', {title});
     },
     deleteTodolist(todolistId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}`)
     },
     updateTodolistTitle(todolistId: string, title: string) {
-        return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title})
+        return instance.put<{ title: string }, AxiosResponse<ResponseType>>(`todo-lists/${todolistId}`, {title});
     },
     reorderTodolists(todolistId: string, putAfterItemId: string) {
         return instance.put<ResponseType>(`todo-lists/${todolistId}/reorder`, {putAfterItemId})

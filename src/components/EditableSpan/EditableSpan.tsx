@@ -1,20 +1,29 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {TextField} from "@material-ui/core";
 
 type EditableSpanPropsType = {
     title: string
     onChange: (value: string) => void
+    disabled?: boolean
 }
 
-export function EditableSpan({title, onChange}: EditableSpanPropsType) {
+export function EditableSpan({title, onChange, disabled = false}: EditableSpanPropsType) {
     const [editMode, setEditMode] = useState(false)
     const [input, setInput] = useState(title)
+
+    useEffect(() => {
+        setInput(title);
+    }, [title]);
+
     const activateEditMode = () => {
-        setEditMode(true)
-        setInput(title)
+        if (!disabled) {
+            setEditMode(true)
+            // setInput(title)
+        }
     }
     const activateViewMode = () => {
         setEditMode(false)
+        setInput(title)
         onChange(input)
     }
     const inputOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setInput(e.currentTarget.value)

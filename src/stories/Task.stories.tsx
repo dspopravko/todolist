@@ -1,10 +1,11 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import {Task} from "../Task";
+import {Task} from "../features/Todolist/Task";
 import {ReduxStoreProviderDecorator} from "../state/ReduxStoreProviderDecorator";
 import {useSelector} from "react-redux";
-import {AppRootStateType} from "../state/store";
+import {AppRootStateType} from "../app/store";
 import {TaskType} from "../api/todolist-api";
+import {entityStatus} from "../state/app-reducer";
 
 
 export default {
@@ -27,6 +28,7 @@ const TaskWithRedux = () => {
                  order={task.order}
                  priority={task.priority}
                  startDate={task.startDate}
+                 tdStatus={entityStatus.idle}
     />
 }
 
