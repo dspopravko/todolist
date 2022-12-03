@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from "axios";
+import {ResponseType} from "./responseTypes";
 
 const instance = axios.create({
     withCredentials: true,
@@ -44,12 +45,7 @@ export type TaskType =
         todoListId: string
     }
 
-export type ResponseType<T = {}> = {
-    data: T
-    fieldsErrors: string[]
-    messages: string[]
-    resultCode: number
-}
+
 type TasksResponseType<T = {}> = {
     error: null | string
     items: TaskType[]
@@ -101,5 +97,3 @@ export const taskAPI = {
         return instance.put<any>(`todo-lists/${todolistId}/tasks/${taskId}/reorder`, {putAfterItemId})
     }
 }
-
-export const authAPI = {}

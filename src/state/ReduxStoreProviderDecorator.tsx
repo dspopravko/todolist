@@ -9,6 +9,12 @@ import {Priority, TaskStatus} from "../api/todolist-api";
 import {appReducer, entityStatus} from "./app-reducer";
 
 const initialGlobalState: AppRootStateType = {
+    auth: {
+        isLoggedIn: true,
+        errors: null,
+        user: 'User',
+        loadingState: entityStatus.idle
+    },
     app: {
         status: entityStatus.idle,
         error: ''

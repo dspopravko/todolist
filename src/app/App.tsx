@@ -1,25 +1,25 @@
-import React, {useCallback, useEffect} from 'react';
-import {Todolist} from "../features/Todolist/Todolist";
+import React, {useEffect} from 'react';
 import './App.css';
-import {AddItemForm} from "../components/AppItemForm/AddItemForm";
 import {
     AppBar,
     Button,
     Container,
-    Grid,
     IconButton,
     LinearProgress,
-    Paper,
     ThemeProvider,
     Toolbar,
     Typography
 } from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {createTheme} from "@material-ui/core/styles";
-import {addTodolistTC, getTodolitsTC, TodolistType} from "../state/todolist-reducer";
 import {useAppDispatch, useAppSelector} from "./store";
 import {entityStatus} from "../state/app-reducer";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
+import {Navigate, Route, Routes} from 'react-router-dom'
+import {TodolistList} from "../features/Todolist/TodolistList";
+import {Login} from "../features/Login/Login";
+import {isAuthTC, logoutTC} from "../state/auth-reducer";
+import {CircularProgress} from "@mui/material";
 
 const theme = createTheme({
     palette: {
@@ -36,14 +36,24 @@ const theme = createTheme({
 })
 
 function App() {
-    let todolists = useAppSelector<Array<TodolistType>>(state => state.todolists)
     const status = useAppSelector(state => state.app.status)
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const authLoadingState = useAppSelector(state => state.auth.loadingState)
+    const username = useAppSelector(state => state.auth.user)
     const dispatch = useAppDispatch()
-    const addTodolist = useCallback((title: string) => dispatch(addTodolistTC(title)), [dispatch])
+
+    const logoutBtnHandler = () => dispatch(logoutTC())
 
     useEffect(() => {
-        dispatch(getTodolitsTC())
+            dispatch(isAuthTC())
     }, [])
+
+    if (authLoadingState === entityStatus.loading) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -57,31 +67,21 @@ function App() {
                         <Typography variant="h6">
                             Todolists
                         </Typography>
-                        <Button color="inherit">Login</Button>
+                        <Button onClick={() => logoutBtnHandler()}
+                                color="inherit">
+                            {isLoggedIn && 'Logout'}
+                        </Button>
+                        {<span>{username}</span>}
                     </Toolbar>
                     {status === entityStatus.loading && <LinearProgress/>}
                 </AppBar>
                 <Container fixed>
-                    <Grid container style={{padding: "20px 0"}}>
-                        <AddItemForm addItem={addTodolist}/>
-                    </Grid>
-                    <Grid container spacing={5} justifyContent={"center"}>
-                        {todolists?.map(tl => {
-                                return (
-                                    <Grid key={tl.id} item>
-                                        <Paper>
-                                            <Todolist
-                                                tdID={tl.id}
-                                                filter={tl.filter}
-                                                title={tl.title}
-                                                entityStatus={tl.entityStatus}
-                                            />
-                                        </Paper>
-                                    </Grid>
-                                )
-                            }
-                        )}
-                    </Grid>
+                    <Routes>
+                        <Route path="/" element={<TodolistList/>}/>
+                        <Route path="/login" element={<Login/>}/>
+                        <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>}/>
+                        <Route path='*' element={<Navigate to={'/404'}/>}/>
+                    </Routes>
                 </Container>
             </div>
         </ThemeProvider>

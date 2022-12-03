@@ -4,6 +4,7 @@ import {applyMiddleware, combineReducers, compose, legacy_createStore, Store} fr
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk'
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {appReducer, AppReducerActionTypes} from "../state/app-reducer";
+import {authReducer, AuthReducerActionType} from "../state/auth-reducer";
 
 declare global {
     interface Window {
@@ -11,14 +12,15 @@ declare global {
     }
 }
 
-export type ActionTypes = tasksActionType | todolistActionType | AppReducerActionTypes
+export type ActionTypes = tasksActionType | todolistActionType | AppReducerActionTypes | AuthReducerActionType
 export type ReduxStateType = ReturnType<typeof rootReducer>
 export type StoreType = Store<ReduxStateType, ActionTypes>
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistReducer,
-    app: appReducer
+    app: appReducer,
+    auth: authReducer
 })
 // const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

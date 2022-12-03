@@ -1,5 +1,5 @@
 import {Dispatch} from 'redux'
-import {ResponseType} from "../api/todolist-api";
+import {ResponseType} from "../api/responseTypes";
 import {AppReducerActionTypes, entityStatus, setAppErrorAC, setAppStatusAC} from "../state/app-reducer";
 
 export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: ErrorUtilsDispatchType) => {
