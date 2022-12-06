@@ -17,7 +17,6 @@ const instance = axios.create({
 
 export const authAPI = {
     isAuth() {
-        console.log('isAuth?')
         return instance.get<null, AxiosResponse<ResponseType<unknown>>>('/auth/me/')
     },
     login(payload: LoginType) {
@@ -26,7 +25,6 @@ export const authAPI = {
             {...payload})
     },
     logout() {
-        console.log("I'm logging you out!")
         return instance.delete<null, AxiosResponse<ResponseType<null>>>('/auth/login/')
     }
 }

@@ -20,7 +20,6 @@ export const Login = () => {
     }
 
     const dispatch = useAppDispatch()
-    const loadingState = useAppSelector(state => state.auth.loadingState)
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
     const formik = useFormik({
@@ -52,9 +51,11 @@ export const Login = () => {
     })
     if (isLoggedIn) return <Navigate to={"/"}/>
 
+
+
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
-            <form onSubmit={(e) => formik.handleSubmit(e)}>
+            <form onSubmit={formik.handleSubmit}>
                 <FormControl>
                     <FormLabel>
                         <p>To log in get registered

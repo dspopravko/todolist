@@ -1,7 +1,9 @@
-import {ActionTypes, AppThunk} from "../app/store";
-import {entityStatus, setAppStatusAC} from "./app-reducer";
+import {appSlice, entityStatus} from "./app-reducer";
 import {authAPI, LoginType} from "../api/auth-api";
 import {handleServerAppError, handleServerNetworkError} from "../utils/errot-utils";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {Dispatch} from "redux";
+import {AppRootStateType} from "../app/store";
 
 const initialState = {
     user: null as string | null,
@@ -9,37 +11,34 @@ const initialState = {
     errors: null,
     loadingState: entityStatus.idle
 }
-type InitialStateType = typeof initialState
 
-export const authReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
-    switch (action.type) {
-        case 'login/SET-IS-LOGGED-IN':
-            return {...state, isLoggedIn: action.value}
-        case 'login/SET-USERNAME-LOGGED-IN':
-            return {...state, user: action.username}
-        case 'login/SET-LOADING':
-            return {...state, loadingState: action.isLoading}
-        default:
-            return state
+const authSlice = createSlice({
+    name: 'auth',
+    initialState: initialState,
+    reducers: {
+        setIsLoggedInAC(state, action: PayloadAction<{isLoggedIn: boolean}>) {
+            state.isLoggedIn = action.payload.isLoggedIn
+        },
+        setUserLoggedInAC(state, action: PayloadAction<{username: string}>) {
+            state.user = action.payload.username
+        },
+        setAuthLoadingAC(state, action: PayloadAction<{isLoading: entityStatus}>) {
+            state.loadingState = action.payload.isLoading
+        }
     }
-}
-// actions
-export const setIsLoggedInAC = (value: boolean) =>
-    ({type: 'login/SET-IS-LOGGED-IN', value} as const)
-export const setUserLoggedInAC = (username: string) =>
-    ({type: 'login/SET-USERNAME-LOGGED-IN', username} as const)
-export const setAuthLoadingAC = (isLoading: entityStatus) =>
-    ({type: 'login/SET-LOADING', isLoading} as const)
+})
+
+export const authReducer = authSlice.reducer
 
 // thunks
-export const loginTC = (data: LoginType): AppThunk => (dispatch) => {
-    dispatch(setAppStatusAC(entityStatus.loading))
-    dispatch(setAuthLoadingAC(entityStatus.loading))
+export const loginTC = (data: LoginType) => (dispatch: Dispatch) => {
+    dispatch(appSlice.actions.setAppStatusAC({status: entityStatus.loading}))
+    dispatch(authSlice.actions.setAuthLoadingAC({isLoading: entityStatus.loading}))
     authAPI.login(data)
         .then((res) => {
             if (res.data.resultCode === 0) {
-                dispatch(setAppStatusAC(entityStatus.idle))
-                dispatch(setIsLoggedInAC(true))
+                dispatch(appSlice.actions.setAppStatusAC({status: entityStatus.idle}))
+                dispatch(authSlice.actions.setIsLoggedInAC({isLoggedIn: true}))
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -48,21 +47,21 @@ export const loginTC = (data: LoginType): AppThunk => (dispatch) => {
             handleServerNetworkError(e, dispatch)
         })
         .finally(() => {
-            dispatch(setAppStatusAC(entityStatus.idle))
-            dispatch(setAuthLoadingAC(entityStatus.idle))
+            dispatch(appSlice.actions.setAppStatusAC({status: entityStatus.idle}))
+            dispatch(authSlice.actions.setAuthLoadingAC({isLoading: entityStatus.idle}))
         })
 }
 
-export const logoutTC = (): AppThunk => (dispatch) => {
-    dispatch(setAppStatusAC(entityStatus.loading))
-    dispatch(setAuthLoadingAC(entityStatus.loading))
+export const logoutTC = () => (dispatch: Dispatch) => {
+    dispatch(appSlice.actions.setAppStatusAC({status: entityStatus.loading}))
+    dispatch(authSlice.actions.setAuthLoadingAC({isLoading: entityStatus.loading}))
     authAPI.logout()
         .then((res) => {
             if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(false))
-                dispatch(setAppStatusAC(entityStatus.idle))
+                dispatch(authSlice.actions.setIsLoggedInAC({isLoggedIn: false}))
+                dispatch(appSlice.actions.setAppStatusAC({status: entityStatus.idle}))
             } else {
-                dispatch(setAppStatusAC(entityStatus.failed))
+                dispatch(appSlice.actions.setAppStatusAC({status: entityStatus.failed}))
                 handleServerAppError(res.data, dispatch)
             }
         })
@@ -70,35 +69,28 @@ export const logoutTC = (): AppThunk => (dispatch) => {
             handleServerNetworkError(e, dispatch)
         })
         .finally(() => {
-            dispatch(setAppStatusAC(entityStatus.idle))
-            dispatch(setAuthLoadingAC(entityStatus.idle))
+            dispatch(appSlice.actions.setAppStatusAC({status: entityStatus.idle}))
+            dispatch(authSlice.actions.setAuthLoadingAC({isLoading: entityStatus.idle}))
         })
 }
 
-export const isAuthTC = (): AppThunk => (dispatch, getState) => {
-    const state = getState()
-    if (state.auth.loadingState !== entityStatus.loading) {
-        dispatch(setAppStatusAC(entityStatus.loading))
-        dispatch(setAuthLoadingAC(entityStatus.loading))
+export const isAuthTC = () => (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    if (getState().auth.loadingState !== entityStatus.loading) {
+        dispatch(appSlice.actions.setAppStatusAC({status: entityStatus.loading}))
+        dispatch(authSlice.actions.setAuthLoadingAC({isLoading: entityStatus.loading}))
         authAPI.isAuth()
             .then((res) => {
                 if (res.data.resultCode === 0) {
-                    console.log('I remember you!')
-                    dispatch(setIsLoggedInAC(true))
+                    dispatch(authSlice.actions.setIsLoggedInAC({isLoggedIn: true}))
                 }
             })
             .catch((e) => {
                 handleServerNetworkError(e, dispatch)
             })
             .finally(() => {
-                dispatch(setAppStatusAC(entityStatus.idle))
-                dispatch(setAuthLoadingAC(entityStatus.idle))
+                dispatch(appSlice.actions.setAppStatusAC({status: entityStatus.idle}))
+                dispatch(authSlice.actions.setAuthLoadingAC({isLoading: entityStatus.idle}))
             })
     }
 }
 
-// types
-export type AuthReducerActionType =
-    ReturnType<typeof setIsLoggedInAC>
-    | ReturnType<typeof setUserLoggedInAC>
-    | ReturnType<typeof setAuthLoadingAC>

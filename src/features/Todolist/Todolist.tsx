@@ -7,10 +7,9 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import {useSelector} from "react-redux";
 import {AppRootStateType, useAppDispatch} from "../../app/store";
 import {
-    ChangeTodolistFilterAC,
     changeTodolistTitleTC,
     FilterValuesType,
-    removeTodolistTC
+    removeTodolistTC, todolistSlice
 } from "../../state/todolist-reducer";
 import {addTaskTC, getTasksTC} from "../../state/tasks-reducer";
 import {Task} from "./Task";
@@ -45,7 +44,7 @@ export const Todolist = memo(({tdID, filter, title, entityStatus: status}: Props
             filteredTasks = tasks
     }
 
-    const filterHandlerCreator = (filter: FilterValuesType) => () => dispatch(ChangeTodolistFilterAC(filter, tdID))
+    const filterHandlerCreator = (filter: FilterValuesType) => () => dispatch(todolistSlice.actions.ChangeTodolistFilterAC({filter: filter, todolistId: tdID}))
     const removeTodolistHandler = () => dispatch(removeTodolistTC(tdID))
     const addTaskHandler = useCallback((title: string) => dispatch(addTaskTC(title, tdID)), [tdID])
     const onChangeTitleHandler = (title: string) => dispatch(changeTodolistTitleTC(tdID, title))

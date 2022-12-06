@@ -1,20 +1,19 @@
 import {Dispatch} from 'redux'
 import {ResponseType} from "../api/responseTypes";
-import {AppReducerActionTypes, entityStatus, setAppErrorAC, setAppStatusAC} from "../state/app-reducer";
+import {appSlice, entityStatus} from "../state/app-reducer";
 
-export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: ErrorUtilsDispatchType) => {
+export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: Dispatch) => {
 
     if (data.messages.length) {
-        dispatch(setAppErrorAC(data.messages[0]))
+        dispatch(appSlice.actions.setAppErrorAC({error: data.messages[0]}))
     } else {
-        dispatch(setAppErrorAC('Some error occurred'))
+        dispatch(appSlice.actions.setAppErrorAC({error: 'Some error occurred'}))
     }
-    dispatch(setAppStatusAC(entityStatus.failed))
+    dispatch(appSlice.actions.setAppStatusAC({status: entityStatus.failed}))
 }
 
-export const handleServerNetworkError = (error: { message: string }, dispatch: ErrorUtilsDispatchType) => {
-    dispatch(setAppErrorAC(error.message))
-    dispatch(setAppStatusAC(entityStatus.failed))
+export const handleServerNetworkError = (error: { message: string }, dispatch: Dispatch) => {
+    dispatch(appSlice.actions.setAppErrorAC({error: error.message}))
+    dispatch(appSlice.actions.setAppStatusAC({status: entityStatus.failed}))
 }
 
-type ErrorUtilsDispatchType = Dispatch<AppReducerActionTypes>

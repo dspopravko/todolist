@@ -1,4 +1,4 @@
-import {appReducer, AppReducerStateType, entityStatus, errorType, setAppErrorAC} from "./app-reducer"
+import {appReducer, AppReducerStateType, appSlice, entityStatus, errorType} from "./app-reducer"
 
 let startState: AppReducerStateType
 
@@ -10,7 +10,7 @@ beforeEach(() => {
 })
 
 test('correct error message should be added', () => {
-    const action = setAppErrorAC('some unique error message')
+    const action = appSlice.actions.setAppErrorAC({error: 'some unique error message'})
     const endState = appReducer(startState, action)
     expect(endState.error).toBe('some unique error message')
 })
