@@ -13,8 +13,8 @@ import {
 } from "../../state/todolist-reducer";
 import {addTaskTC, getTasksTC} from "../../state/tasks-reducer";
 import {Task} from "./Task";
-import {TaskType} from "../../api/todolist-api";
 import {entityStatus} from "../../state/app-reducer";
+import {TaskType} from "../../models/MTask";
 
 type PropsType = {
     tdID: string
@@ -44,7 +44,7 @@ export const Todolist = memo(({tdID, filter, title, entityStatus: status}: Props
             filteredTasks = tasks
     }
 
-    const filterHandlerCreator = (filter: FilterValuesType) => () => dispatch(todolistSlice.actions.ChangeTodolistFilterAC({filter: filter, todolistId: tdID}))
+    const filterHandlerCreator = (filter: FilterValuesType) => () => dispatch(todolistSlice.actions.ChangeTodolistFilter({filter: filter, todolistId: tdID}))
     const removeTodolistHandler = () => dispatch(removeTodolistTC(tdID))
     const addTaskHandler = useCallback((title: string) => dispatch(addTaskTC(title, tdID)), [tdID])
     const onChangeTitleHandler = (title: string) => dispatch(changeTodolistTitleTC(tdID, title))

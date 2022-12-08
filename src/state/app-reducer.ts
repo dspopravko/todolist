@@ -17,10 +17,10 @@ export const appSlice = createSlice({
     name: 'app',
     initialState: initialState,
     reducers: {
-        setAppStatusAC(state, action: PayloadAction<{status: entityStatus}>) {
+        setAppStatus(state, action: PayloadAction<{status: entityStatus}>) {
             state.status = action.payload.status
         },
-        setAppErrorAC(state, action: PayloadAction<{error: errorType}>) {
+        setAppError(state, action: PayloadAction<{error: errorType}>) {
             state.error = action.payload.error
         }
     }

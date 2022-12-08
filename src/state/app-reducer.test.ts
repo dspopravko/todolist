@@ -10,7 +10,7 @@ beforeEach(() => {
 })
 
 test('correct error message should be added', () => {
-    const action = appSlice.actions.setAppErrorAC({error: 'some unique error message'})
+    const action = appSlice.actions.setAppError({error: 'some unique error message'})
     const endState = appReducer(startState, action)
     expect(endState.error).toBe('some unique error message')
 })

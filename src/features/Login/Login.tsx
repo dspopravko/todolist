@@ -11,6 +11,7 @@ import {useFormik} from 'formik';
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {loginTC} from "../../state/auth-reducer";
 import {Navigate} from "react-router-dom";
+import s from "./Login.module.css"
 
 export const Login = () => {
     type FormikErrorType = {
@@ -24,7 +25,7 @@ export const Login = () => {
 
     const formik = useFormik({
         initialValues: {
-            email: '',
+            email: 'free@samuraijs.com',
             password: '',
             rememberMe: false
         },
@@ -52,43 +53,56 @@ export const Login = () => {
     if (isLoggedIn) return <Navigate to={"/"}/>
 
 
-
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
             <form onSubmit={formik.handleSubmit}>
                 <FormControl>
-                    <FormLabel>
-                        <p>To log in get registered
-                            <a href={'https://social-network.samuraijs.com/'}
-                               target={'_blank'}> here
-                            </a>
-                        </p>
-                        <p>or use common test account credentials:</p>
-                        <p>Email: free@samuraijs.com</p>
-                        <p>Password: free</p>
+                    <FormLabel className={s.welcome}>
+                        <div className={s.a}>
+                            <p>To log in get registered&nbsp;
+                                <a href={'https://social-network.samuraijs.com/'}
+                                   target={'_blank'}>here <br/>
+                                </a> or use common test account credentials:
+                            </p>
+                        </div>
+                        <div className={s.b}>
+                            <p>
+                                Email: free@samuraijs.com<br/>
+                                Password: free
+                            </p>
+                        </div>
                     </FormLabel>
                     <FormGroup>
                         <TextField label="Email"
                                    margin="normal"
                                    autoComplete={"username"}
+                                   helperText={formik.touched.email && formik.errors.email}
+                                   error={formik.touched.email && !!formik.errors.email}
                                    {...formik.getFieldProps('email')}
                         />
-                        {formik.touched.email && formik.errors.email && <div style={{color: 'red'}}>{formik.errors.email}</div>}
                         <TextField type="password"
                                    label="Password"
                                    margin="normal"
                                    autoComplete={"current-password"}
+                                   helperText={formik.touched.password && formik.errors.password}
+                                   error={formik.touched.password && !!formik.errors.password}
                                    {...formik.getFieldProps('password')}
                         />
-                        {formik.touched.password && formik.errors.password && <div style={{color: 'red'}}>{formik.errors.password}</div>}
-                        <FormControlLabel label={'Remember me'}
-                                          control={<Checkbox
-                                              name="rememberMe"
-                                              onChange={formik.handleChange}
-                                              checked={formik.values.rememberMe}
-                                          />}
+                        <div className={s.labelWrapper}>
 
-                        />
+                            <FormControlLabel label={'Remember me'}
+                                              sx={{
+                                                  marginLeft: 0,
+                                                  paddingTop: '6px',
+                                                  paddingBottom: '10px'
+                                              }}
+                                              control={<Checkbox
+                                                  name="rememberMe"
+                                                  onChange={formik.handleChange}
+                                                  checked={formik.values.rememberMe}
+                                              />}
+                            />
+                        </div>
                         <Button type={'submit'} variant={'contained'} color={'primary'}>
                             Login
                         </Button>

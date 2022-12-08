@@ -1,0 +1,11 @@
+.welcome p{
+
+}
+
+.error{
+    font-size: 0.8rem;
+    color: #d70000;
+}
+.labelWrapper {
+    display: flex;
+}

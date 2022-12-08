@@ -18,7 +18,7 @@ export function ErrorSnackbar() {
         if (reason === 'clickaway') {
             return
         }
-        dispatch(appSlice.actions.setAppErrorAC({error: null}))
+        dispatch(appSlice.actions.setAppError({error: null}))
     }
     return (
         <Snackbar open={ error !== null } autoHideDuration={6000} onClose={handleClose}>
