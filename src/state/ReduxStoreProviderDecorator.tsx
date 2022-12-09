@@ -5,8 +5,9 @@ import {todolistReducer} from "./todolist-reducer";
 import {combineReducers, legacy_createStore} from "redux";
 import {AppRootStateType} from "../app/store";
 import {v1} from "uuid";
-import {Priority, TaskStatus} from "../api/todolist-api";
 import {appReducer, entityStatus} from "./app-reducer";
+import {Priority} from "../models/MPriority";
+import {TaskStatus} from "../models/MTaskStatus";
 
 const initialGlobalState: AppRootStateType = {
     auth: {

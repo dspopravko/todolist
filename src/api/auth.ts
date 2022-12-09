@@ -15,9 +15,9 @@ const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/'
 })
 
-export const authAPI = {
+export const auth = {
     isAuth() {
-        return instance.get<null, AxiosResponse<ResponseType<unknown>>>('/auth/me/')
+        return instance.get<null, AxiosResponse<ResponseType<{ email: string, id: number, login: string }>>>('/auth/me/')
     },
     login(payload: LoginType) {
         return instance.post<{ payload: LoginType },

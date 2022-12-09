@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import {Priority, taskAPI, TaskStatus, todolistAPI} from "../api/todolist-api";
+import {todolist} from "../api/todolist";
+import {Priority} from "../models/MPriority";
+import {TaskStatus} from "../models/MTaskStatus";
+import {taskAPI} from "../api/tasks";
 
 export default {
     title: 'API'
@@ -13,14 +16,14 @@ const config = {
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todolistAPI.getTodolists().then(res => setState(res.data))
+        todolist.getTodolists().then(res => setState(res.data))
     }, [])
     return <div>{JSON.stringify(state)}</div>
 }
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todolistAPI.createTodolist('new title2').then(res => setState(res.data))
+        todolist.createTodolist('new title2').then(res => setState(res.data))
     }, [])
 
     return <div>{JSON.stringify(state)}</div>
@@ -28,7 +31,7 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todolistAPI.deleteTodolist("072b221d-80b4-4721-afca-36923c057200").then(res => setState(res))
+        todolist.deleteTodolist("072b221d-80b4-4721-afca-36923c057200").then(res => setState(res))
     }, [])
 
     return <div>{JSON.stringify(state)}</div>
@@ -36,7 +39,7 @@ export const DeleteTodolist = () => {
 export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todolistAPI.updateTodolistTitle('558a9d95-701f-4319-b3a7-1e9032aea879', 'updated title').then(res => setState(res))
+        todolist.updateTodolistTitle('558a9d95-701f-4319-b3a7-1e9032aea879', 'updated title').then(res => setState(res))
     }, [])
 
     return <div>{JSON.stringify(state)}</div>
@@ -44,7 +47,7 @@ export const UpdateTodolistTitle = () => {
 export const ReorderTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todolistAPI.reorderTodolists('685e5d49-2fb3-4d78-8cf7-a1384786ceed', '0ae2f75b-712b-4721-b2dd-036adf3687c0').then(res => setState(res))
+        todolist.reorderTodolists('685e5d49-2fb3-4d78-8cf7-a1384786ceed', '0ae2f75b-712b-4721-b2dd-036adf3687c0').then(res => setState(res))
     }, [])
     return <div>{JSON.stringify(state)}</div>
 }

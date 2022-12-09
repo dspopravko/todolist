@@ -4,7 +4,7 @@ import {action} from "@storybook/addon-actions"
 import {EditableSpan} from "../components/EditableSpan/EditableSpan";
 
 export default {
-    title: 'Todolist/EditableSpan',
+    title: 'TodolistPage/EditableSpan',
     component: EditableSpan,
     argTypes: {
         onChange: {

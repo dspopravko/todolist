@@ -4,9 +4,10 @@ import s from "./Task.module.css"
 import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
 import BackspaceIcon from "@material-ui/icons/Backspace";
 import {removeTaskTC, updateTaskTC} from "../../state/tasks-reducer";
-import {TaskStatus, TaskType} from "../../api/todolist-api";
 import {useAppDispatch} from "../../app/store";
 import {entityStatus} from "../../state/app-reducer";
+import {TaskType} from "../../models/MTask";
+import {TaskStatus} from "../../models/MTaskStatus";
 
 export type TaskPropsType = TaskType & { todoId: string, tdStatus: entityStatus }
 

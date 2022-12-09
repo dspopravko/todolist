@@ -7,7 +7,7 @@ import {IconButton, TextField} from "@material-ui/core";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 export default {
-    title: 'Todolist/AddItemForm',
+    title: 'TodolistPage/AddItemForm',
     component: AddItemForm
 } as ComponentMeta<typeof AddItemForm>
 

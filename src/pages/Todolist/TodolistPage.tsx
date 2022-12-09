@@ -1,14 +1,13 @@
 import React, {useCallback, useEffect} from 'react';
-import {Grid, Paper} from "@material-ui/core";
+import {Grid, Paper, Typography} from "@material-ui/core";
 import {AddItemForm} from "../../components/AppItemForm/AddItemForm";
-import {Todolist} from "./Todolist";
+import {Todolist} from "../../features/Todolist/Todolist";
 import {addTodolistTC, getTodolitsTC, TodolistType} from "../../state/todolist-reducer";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {Navigate} from "react-router-dom";
+import s from "./TodolistPage.module.css"
 
-
-
-export const TodolistList = () => {
+export const TodolistPage = () => {
 
     const dispatch = useAppDispatch()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -19,16 +18,21 @@ export const TodolistList = () => {
         isLoggedIn && dispatch(getTodolitsTC())
     }, [])
 
-    if (!isLoggedIn) {
-        return <Navigate to={"/login"}/>
-    }
+    if (!isLoggedIn) return <Navigate to={"/login"}/>
 
     return (
         <>
-            <Grid container style={{padding: "20px 0"}}>
-                <AddItemForm addItem={addTodolist}/>
+            <Grid
+                container
+                justifyContent={"center"}
+                style={{padding: "20px 0"}}
+            >
+                <Paper className={s.addNewTodolistContainer}>
+                        <Typography variant="h6">Add new todolist:</Typography>
+                        <AddItemForm addItem={addTodolist}/>
+                </Paper>
             </Grid>
-            <Grid container spacing={5} justifyContent={"center"}>
+            <Grid wrap={'wrap'} container spacing={5}  justifyContent={"center"}>
                 {todolists?.map(tl => {
                         return (
                             <Grid key={tl.id} item>
