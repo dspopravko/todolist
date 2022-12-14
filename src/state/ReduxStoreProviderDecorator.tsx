@@ -2,12 +2,16 @@ import React from 'react';
 import {Provider} from "react-redux";
 import {tasksReducer} from "./tasks-reducer";
 import {todolistReducer} from "./todolist-reducer";
-import {combineReducers, legacy_createStore} from "redux";
+import {combineReducers} from "redux";
 import {AppRootStateType} from "../app/store";
 import {v1} from "uuid";
 import {appReducer, entityStatus} from "./app-reducer";
 import {Priority} from "../models/MPriority";
 import {TaskStatus} from "../models/MTaskStatus";
+import {configureStore} from "@reduxjs/toolkit";
+import thunkMiddleware from "redux-thunk";
+import logger from "redux-logger";
+import {authReducer} from "./auth-reducer";
 
 const initialGlobalState: AppRootStateType = {
     auth: {
@@ -39,10 +43,18 @@ const initialGlobalState: AppRootStateType = {
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistReducer,
-    app: appReducer
+    app: appReducer,
+    auth: authReducer
 })
 
-export const StoryBookStore = legacy_createStore(rootReducer, initialGlobalState);
+export const StoryBookStore = configureStore({
+    reducer: rootReducer,
+    preloadedState: initialGlobalState,
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware()
+        .prepend(thunkMiddleware)
+        .concat(logger)
+})
 
 
 export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {
