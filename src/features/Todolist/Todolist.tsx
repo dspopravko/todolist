@@ -12,7 +12,7 @@ import {
     removeTodolistTC, todolistSlice
 } from "../../state/todolist-reducer";
 import {addTaskTC, getTasksTC} from "../../state/tasks-reducer";
-import {Task} from "./Task";
+import {Task} from "./Task/Task";
 import {entityStatus} from "../../state/app-reducer";
 import {TaskType} from "../../models/MTask";
 

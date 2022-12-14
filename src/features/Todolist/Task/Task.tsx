@@ -1,17 +1,17 @@
 import React, {ChangeEvent, memo} from 'react';
 import {Checkbox, IconButton, ListItem} from "@material-ui/core";
 import s from "./Task.module.css"
-import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
+import {EditableSpan} from "../../../components/EditableSpan/EditableSpan";
 import BackspaceIcon from "@material-ui/icons/Backspace";
-import {removeTaskTC, updateTaskTC} from "../../state/tasks-reducer";
-import {useAppDispatch} from "../../app/store";
-import {entityStatus} from "../../state/app-reducer";
-import {TaskType} from "../../models/MTask";
-import {TaskStatus} from "../../models/MTaskStatus";
+import {removeTaskTC, updateTaskTC} from "../../../state/tasks-reducer";
+import {useAppDispatch} from "../../../app/store";
+import {entityStatus} from "../../../state/app-reducer";
+import {TaskType} from "../../../models/MTask";
+import {TaskStatus} from "../../../models/MTaskStatus";
 
 export type TaskPropsType = TaskType & { todoId: string, tdStatus: entityStatus }
 
-export const Task = memo(({title, id, status, todoId, tdStatus, ...props}: TaskPropsType) => {
+export const Task = memo(({title, id, status, todoId, tdStatus}: TaskPropsType) => {
     const dispatch = useAppDispatch()
 
     const onRemoveHandler = () => {

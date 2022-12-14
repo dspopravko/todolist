@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import {Task} from "../features/Todolist/Task";
+import {Task} from "../features/Todolist/Task/Task";
 import {ReduxStoreProviderDecorator} from "../state/ReduxStoreProviderDecorator";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../app/store";
@@ -32,7 +32,7 @@ const TaskWithRedux = () => {
     />
 }
 
-const TaskTemplate: ComponentStory<typeof TaskWithRedux> = (args) => <TaskWithRedux />
+const TaskTemplate: ComponentStory<typeof TaskWithRedux> = () => <TaskWithRedux />
 
 export const ActiveTask = TaskTemplate
 

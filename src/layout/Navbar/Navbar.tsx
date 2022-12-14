@@ -38,13 +38,10 @@ export const Navbar = () => {
                                 <p>
                                     {user}
                                 </p>
-
                             </div>
                         }
                     </div>
                 </div>
-
-
                 <IconButton onClick={() => {
                     const a = window.open('https://github.com/dspopravko/03-todolist', '_blank')
                     a && a.focus()
