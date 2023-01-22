@@ -1,57 +1,45 @@
 import React from 'react';
-import {Button, IconButton, LinearProgress, Toolbar, Typography} from "@material-ui/core";
-import {GitHub, Menu} from "@material-ui/icons";
-import {logoutTC} from "../../state/auth-reducer";
-import {useAppDispatch, useAppSelector} from "../../app/store";
-import {entityStatus} from "../../state/app-reducer";
+import { Button, LinearProgress, Toolbar, Typography } from "@material-ui/core";
+import { useAppSelector } from "../../state/store";
 import s from "./Navbar.module.css"
+import { selectStatus } from "../../features/Application";
+import { selectIsLoggedIn, selectUserName } from "../../features/Auth";
+import { useActions } from "../../utils/redux-utils";
+import { authActions } from "../../features/Auth";
 
 export const Navbar = () => {
+  const { logout } = useActions(authActions)
+  const status = useAppSelector(selectStatus)
+  const username = useAppSelector(selectUserName)
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+  const logoutBtnHandler = () => logout()
+  const user = username || "Guest"
 
-    const status = useAppSelector(state => state.app.status)
-    const username = useAppSelector(state => state.auth.user)
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const dispatch = useAppDispatch()
-    const logoutBtnHandler = () => dispatch(logoutTC())
-    const user = username || "Guest"
+  return (
+    <>
+      <Toolbar className={s.toolbar}>
+        <div className={s.navbar}>
+          <Typography variant="h6">
+            Todolists
+          </Typography>
 
-    return (
-        <>
-            <Toolbar className={s.toolbar}>
-
-                <IconButton edge="start" color="inherit" aria-label="menu">
-                    <Menu/>
-                </IconButton>
-                <div className={s.navbar}>
-
-                    <Typography variant="h6">
-                        Todolists
-                    </Typography>
-
-                    <div className={s.logoutWrapper}>
-                        <Button onClick={() => logoutBtnHandler()}
-                                color="inherit">
-                            {isLoggedIn && 'Logout'}
-                        </Button>
-                        {isLoggedIn &&
-                            <div className={s.user}>
-                                <p>
-                                    {user}
-                                </p>
-                            </div>
-                        }
-                    </div>
+          <div className={s.logoutWrapper}>
+            <Button onClick={() => logoutBtnHandler()}
+                    color="inherit">
+              {isLoggedIn && 'Logout'}
+            </Button>
+            {isLoggedIn &&
+                <div className={s.user}>
+                    <p>
+                      {user}
+                    </p>
                 </div>
-                <IconButton onClick={() => {
-                    const a = window.open('https://github.com/dspopravko/03-todolist', '_blank')
-                    a && a.focus()
-                }} edge="start" color="inherit" aria-label="menu">
-                    <GitHub/>
-                </IconButton>
-
-            </Toolbar>
-            {status === entityStatus.loading && <LinearProgress/>}
-        </>
-    );
+            }
+          </div>
+        </div>
+      </Toolbar>
+      {status === 'loading' && <LinearProgress />}
+    </>
+  );
 
 }

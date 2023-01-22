@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import {todolist} from "../api/todolist";
+import {todolist} from "../api/todolists/todolist";
 import {Priority} from "../models/MPriority";
 import {TaskStatus} from "../models/MTaskStatus";
-import {taskAPI} from "../api/tasks";
+import {taskAPI} from "../api/todolists/tasks/tasks";
 
 export default {
     title: 'API'

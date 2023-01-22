@@ -1,11 +1,11 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import {Task} from "../features/Todolist/Task/Task";
+import {Task} from "../features/Todolist";
 import {ReduxStoreProviderDecorator} from "../state/ReduxStoreProviderDecorator";
 import {useSelector} from "react-redux";
-import {AppRootStateType} from "../app/store";
-import {entityStatus} from "../state/app-reducer";
+import {AppRootStateType} from "../state/store";
 import {TaskType} from "../models/MTask";
+import { entityStatus } from "../models/MEntityStatus";
 
 
 export default {
