@@ -55,7 +55,7 @@ export const App = () => {
           <Navbar />
         </AppBar>
         {status === "loading" && <LinearProgress />}
-        <Container fixed>
+        <Container>
           <Routes>
             <Route path="/" element={<TodolistPage />} />
             <Route path="/login" element={<Login />} />

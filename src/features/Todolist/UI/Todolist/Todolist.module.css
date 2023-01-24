@@ -1,8 +1,21 @@
 .todolist {
-    /*flex: 0 1 auto;*/
-    padding: 30px;
-    width: 320px;
+    box-shadow: var(--shadow);
+    border-radius: var(--borderRadius);
+    padding: clamp(5px, 1vw, 10px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+.todolist h3{
+    width: calc(100% - 50px);
+    margin: 6px;
 }
 .editWrapper {
+    top: 0;
+    right: 0;
+    position: absolute;
     float: right;
+    transform: translate(-6px, 6px);
 }

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { Grid, Paper, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { AddItemForm } from "../../components/AppItemForm/AddItemForm";
 import { Todolist } from "../../features/Todolist";
 import { useAppSelector } from "../../state/store";
@@ -22,34 +22,24 @@ export const TodolistPage = () => {
   if (!isLoggedIn) return <Navigate to={"/login"} />
 
   return (
-    <>
-      <Grid
-        container
-        justifyContent={"center"}
-        style={{ padding: "20px 0" }}
-      >
-        <Paper className={s.addNewTodolistContainer}>
-          <Typography variant="h6">Add new todolist:</Typography>
-          <AddItemForm addItem={addTodolistHandler} />
-        </Paper>
-      </Grid>
-      <Grid wrap={'wrap'} container spacing={5} justifyContent={"center"}>
-        {todolists?.map(tl => {
-            return (
-              <Grid key={tl.id} item>
-                <Paper>
-                  <Todolist
-                    tdID={tl.id}
-                    filter={tl.filter}
-                    title={tl.title}
-                    entityStatus={tl.tdStatus}
-                  />
-                </Paper>
-              </Grid>
-            )
-          }
-        )}
-      </Grid>
-    </>
+    <div className={s.mainContainer}>
+      <div className={s.addNewTodolistContainer}>
+        <Typography variant="h6">Add new todolist:</Typography>
+        <AddItemForm addItem={addTodolistHandler} />
+      </div>
+
+      {todolists?.map(tl => {
+          return (
+            <Todolist
+              key={tl.id}
+              tdID={tl.id}
+              filter={tl.filter}
+              title={tl.title}
+              entityStatus={tl.tdStatus}
+            />
+          )
+        }
+      )}
+    </div>
   );
 }
