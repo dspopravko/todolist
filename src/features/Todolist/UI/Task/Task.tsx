@@ -1,5 +1,5 @@
-import React, { ChangeEvent, memo } from 'react';
-import { Checkbox, IconButton, ListItem } from "@material-ui/core";
+import React, { ChangeEvent } from 'react';
+import { Checkbox, IconButton } from "@material-ui/core";
 import s from "./Task.module.css"
 import { EditableSpan } from "../../../../components/EditableSpan/EditableSpan";
 import BackspaceIcon from "@material-ui/icons/Backspace";
@@ -8,24 +8,25 @@ import { TaskStatus } from "../../../../models/MTaskStatus";
 import { useActions } from "../../../../utils/redux-utils";
 import { entityStatus } from "../../../../models/MEntityStatus";
 import { tasksActions } from "../../index";
+import { theme } from "../../../../app/App";
+import { motion } from 'framer-motion';
 
 const formatTaskOnStatus = (status: TaskStatus) => {
   return status === TaskStatus.Completed ? {
       textDecoration: "line-through",
       padding: "0",
-      color: "#8fc0bc"
+      color: theme.palette.grey["800"]
     }
     : {
       fontWeight: "bold",
       padding: "0",
-      color: "#5d6c6b"
+      color: theme.palette.text.primary
     }
 }
 type TaskPropsType = TaskType & { todoId: string, tdStatus: entityStatus }
 
-export const Task = memo(({ title, id, status, todoId, tdStatus }: TaskPropsType) => {
+export const Task = ({ title, id, status, todoId, tdStatus }: TaskPropsType) => {
   const { removeTask, updateTask } = useActions(tasksActions)
-
   const onRemoveHandler = () => removeTask({ todolistId: todoId, taskId: id })
   const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
@@ -34,15 +35,11 @@ export const Task = memo(({ title, id, status, todoId, tdStatus }: TaskPropsType
   const onChangeTitleHandler = (title: string) => updateTask({ todolistId: todoId, taskId: id, status, title })
 
   return (
-    <ListItem
-      key={id}
-      className={status === TaskStatus.Completed ? "isDone" : ""}
-      style={formatTaskOnStatus(status)}
-    >
-      <div className={s.task}>
+    <motion.div layoutId={'task' + id} className={s.container}>
+      <div className={s.task} style={formatTaskOnStatus(status)}>
         <div>
           <Checkbox
-            style={{ color: "#9fc4c0" }}
+            style={{ color: theme.palette.primary.main }}
             checked={status === TaskStatus.Completed}
             onChange={onChangeStatusHandler}
           />
@@ -53,15 +50,16 @@ export const Task = memo(({ title, id, status, todoId, tdStatus }: TaskPropsType
                         disabled={tdStatus === entityStatus.loading}
           />
         </div>
-        <div className={s.btnWrapper}>
-          <IconButton
-            color="primary"
-            size="small"
-            onClick={onRemoveHandler}>
-            <BackspaceIcon />
-          </IconButton>
-        </div>
       </div>
-    </ListItem>
+      <div className={s.btnWrapper}>
+        <IconButton
+          disabled={tdStatus === entityStatus.loading}
+          color={"primary"}
+          size="small"
+          onClick={onRemoveHandler}>
+          <BackspaceIcon />
+        </IconButton>
+      </div>
+    </motion.div>
   );
-})
+}

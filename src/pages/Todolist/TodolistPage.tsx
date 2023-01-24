@@ -9,6 +9,8 @@ import { selectIsLoggedIn } from "../../features/Auth";
 import { todolistsActions } from '../../features/Todolist'
 import { useActions } from "../../utils/redux-utils";
 import { selectTodolists } from "../../features/Todolist";
+import { theme } from "../../app/App";
+import { AnimatePresence } from "framer-motion";
 
 export const TodolistPage = () => {
   const { getTodolists, addTodolist } = useActions(todolistsActions)
@@ -23,11 +25,11 @@ export const TodolistPage = () => {
 
   return (
     <div className={s.mainContainer}>
-      <div className={s.addNewTodolistContainer}>
+      <div style={{backgroundColor: theme.palette.background.default}} className={s.addNewTodolistContainer}>
         <Typography variant="h6">Add new todolist:</Typography>
         <AddItemForm addItem={addTodolistHandler} />
       </div>
-
+      <AnimatePresence>
       {todolists?.map(tl => {
           return (
             <Todolist
@@ -40,6 +42,7 @@ export const TodolistPage = () => {
           )
         }
       )}
+      </AnimatePresence>
     </div>
   );
 }

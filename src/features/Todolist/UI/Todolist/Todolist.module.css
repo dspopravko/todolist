@@ -3,19 +3,30 @@
     border-radius: var(--borderRadius);
     padding: clamp(5px, 1vw, 10px);
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
+    display: grid;
+    grid-template:
+    'title button'
+    'input addbtn'
+    'tasks tasks'
+    'filter filter';
+    grid-template-columns: 1fr 50px;
+    grid-template-rows: repeat(2, minmax(min-content, max-content)) 1fr 50px;
 }
-.todolist h3{
+.filter {
+    margin-top: 13px;
+    display: flex;
+    justify-content: center;
+    height: min-content;
+    grid-area: filter;
+}
+.title {
+    grid-area: title;
     width: calc(100% - 50px);
     margin: 6px;
 }
+.tasksList {
+    grid-area: tasks;
+}
 .editWrapper {
-    top: 0;
-    right: 0;
-    position: absolute;
-    float: right;
-    transform: translate(-6px, 6px);
+    grid-area: button;
 }

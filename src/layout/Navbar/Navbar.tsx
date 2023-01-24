@@ -1,11 +1,12 @@
 import React from 'react';
-import { Button, LinearProgress, Toolbar, Typography } from "@material-ui/core";
+import { Button, Toolbar, Typography } from "@material-ui/core";
 import { useAppSelector } from "../../state/store";
 import s from "./Navbar.module.css"
 import { selectStatus } from "../../features/Application";
 import { selectIsLoggedIn, selectUserName } from "../../features/Auth";
 import { useActions } from "../../utils/redux-utils";
 import { authActions } from "../../features/Auth";
+import { theme } from "../../app/App";
 
 export const Navbar = () => {
   const { logout } = useActions(authActions)
@@ -14,10 +15,10 @@ export const Navbar = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const logoutBtnHandler = () => logout()
   const user = username || "Guest"
-
   return (
     <>
-      <Toolbar className={s.toolbar}>
+      <Toolbar style={{backgroundColor: status === 'idle' ? theme.palette.primary.main : theme.palette.primary.light}} className={s.toolbar}>
+
         <div className={s.navbar}>
           <Typography variant="h6">
             Todolists
@@ -38,7 +39,6 @@ export const Navbar = () => {
           </div>
         </div>
       </Toolbar>
-      {status === 'loading' && <LinearProgress />}
     </>
   );
 

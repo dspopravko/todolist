@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect } from "react";
 import s from "./Todolist.module.css"
 import { AddItemForm } from "../../../../components/AppItemForm/AddItemForm";
 import { EditableSpan } from "../../../../components/EditableSpan/EditableSpan";
-import { Button, ButtonGroup, IconButton, List } from "@material-ui/core";
+import { Button, ButtonGroup, IconButton } from "@material-ui/core";
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { useSelector } from "react-redux";
 import { AppRootStateType } from "../../../../state/store";
@@ -12,6 +12,8 @@ import { useActions } from "../../../../utils/redux-utils";
 import { tasksActions, todolistsActions } from "../../index";
 import { entityStatus } from "../../../../models/MEntityStatus";
 import { FilterValuesType } from "../../../../models/MFilterValues";
+import { theme } from "../../../../app/App";
+import { motion } from "framer-motion";
 
 type PropsType = {
   tdID: string
@@ -23,7 +25,6 @@ type PropsType = {
 export const Todolist = memo(({ tdID, filter, title, entityStatus: status }: PropsType) => {
   const { changeTodolistTitle, removeTodolist, changeTodolistFilter } = useActions(todolistsActions)
   const { getTasks, addTask } = useActions(tasksActions)
-
   useEffect(() => {
     getTasks(tdID)
   }, [tdID])
@@ -51,22 +52,24 @@ export const Todolist = memo(({ tdID, filter, title, entityStatus: status }: Pro
   const onChangeTitleHandler = (title: string) => changeTodolistTitle({ todolistId: tdID, title })
 
   return (
-    <div className={s.todolist}>
-      <div className={s.editWrapper}>
+    <motion.div
+      layoutId={'todolist'+tdID} style={{backgroundColor: theme.palette.background.default}} className={s.todolist}>
+      <motion.div  layoutId={'deleteTd'+tdID} className={s.editWrapper}>
         <IconButton
           disabled={status === entityStatus.loading}
           onClick={removeTodolistHandler}>
           <HighlightOffIcon />
         </IconButton>
-      </div>
-      <h3>
+      </motion.div>
+      <motion.h3 layoutId={'title'+tdID} className={s.title}>
         <EditableSpan title={title} onChange={onChangeTitleHandler} />
-      </h3>
+      </motion.h3>
       <AddItemForm
         disabled={status === entityStatus.loading}
         addItem={addTaskHandler}
       />
-      <List>
+
+      <div className={s.tasksList}>
         {filteredTasks?.map(task => {
           return <Task
             key={task.id}
@@ -84,9 +87,10 @@ export const Todolist = memo(({ tdID, filter, title, entityStatus: status }: Pro
             tdStatus={status}
           />
         })}
-      </List>
-      {filteredTasks && filteredTasks.length < 1 ? "Task list is empty" : ""}
-      <div>
+        {filteredTasks && filteredTasks.length < 1 ? "Task list is empty" : ""}
+      </div>
+
+      <div className={s.filter}>
         <ButtonGroup
           size="small"
           variant="contained"
@@ -105,6 +109,6 @@ export const Todolist = memo(({ tdID, filter, title, entityStatus: status }: Pro
           </Button>
         </ButtonGroup>
       </div>
-    </div>
+    </motion.div>
   )
 })

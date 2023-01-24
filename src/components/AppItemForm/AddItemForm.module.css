@@ -1,4 +1,9 @@
-.titleInput {
+.inputContainer {
+    grid-area: input;
     display: flex;
+    justify-content: flex-start;
     align-items: center;
+}
+.button {
+    grid-area: addbtn;
 }

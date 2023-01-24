@@ -5,7 +5,6 @@
     grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
     justify-content: center;
     justify-items: center;
-    /*border: 2px solid green;*/
 }
 .addNewTodolistContainer {
     box-shadow: var(--shadow);
