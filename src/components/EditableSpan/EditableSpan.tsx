@@ -39,6 +39,7 @@ export function EditableSpan({ title, onChange, disabled = false }: EditableSpan
       value={input}
       onChange={inputOnChangeHandler}
       autoFocus
+      multiline
     />
     : <span onDoubleClick={activateEditMode}>{input}</span>
 }

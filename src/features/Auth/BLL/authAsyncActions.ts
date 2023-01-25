@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { auth, LoginType } from "../../../api";
 import { ThunkError } from "../../../state/store";
-import { handleServerAppError, handleServerNetworkError } from "../../../utils/error-utils";
+import { handleServerAppError, handleServerNetworkError } from "../../../utils/handeAsyncError";
 import { AxiosError } from "axios";
 
 const login = createAsyncThunk<undefined, LoginType, ThunkError>(
@@ -32,7 +32,7 @@ const logout = createAsyncThunk<undefined, undefined, ThunkError>(
       return handleServerNetworkError(error, thunkAPI)
     }
   })
-export const asyncActions = {
+export const authAsyncActions = {
   login,
   logout
 }

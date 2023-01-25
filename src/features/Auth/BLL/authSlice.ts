@@ -1,6 +1,6 @@
 import { appActions } from "../../Application";
 import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
-import { asyncActions } from "./authAsyncActions";
+import { authAsyncActions } from "./authAsyncActions";
 
 type AuthStateType = {
   user: string | null
@@ -26,20 +26,20 @@ const authSlice = createSlice({
       .addCase(appActions.initializeApp.fulfilled, (state) => {
         state.isAuth = true
       })
-      .addCase(asyncActions.login.fulfilled, (state) => {
+      .addCase(authAsyncActions.login.fulfilled, (state) => {
         state.isAuth = true
       })
-      .addCase(asyncActions.logout.fulfilled, (state) => {
+      .addCase(authAsyncActions.logout.fulfilled, (state) => {
         state.isAuth = false
       })
-      .addMatcher(isAnyOf(asyncActions.login.pending, asyncActions.logout.pending), (state) => {
+      .addMatcher(isAnyOf(authAsyncActions.login.pending, authAsyncActions.logout.pending), (state) => {
         state.state = 'loading'
       })
       .addMatcher(isAnyOf(
-        asyncActions.login.fulfilled,
-        asyncActions.login.rejected,
-        asyncActions.logout.fulfilled,
-        asyncActions.logout.rejected,
+        authAsyncActions.login.fulfilled,
+        authAsyncActions.login.rejected,
+        authAsyncActions.logout.fulfilled,
+        authAsyncActions.logout.rejected,
       ), (state) => {
         state.state = 'idle'
       })

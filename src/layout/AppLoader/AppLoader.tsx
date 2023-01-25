@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useAppSelector } from "../../state/store";
 import { appActions, selectStatus } from "../../features/Application";
 import { selectIsLoggedIn } from "../../features/Auth";
-import { useActions } from "../../utils/redux-utils";
+import { useActions } from "../../hooks/useActions";
 
 type AppLoaderPropsType = {
   children: React.ReactNode

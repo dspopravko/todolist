@@ -7,7 +7,7 @@ import { Navigate } from "react-router-dom";
 import s from "./TodolistPage.module.css"
 import { selectIsLoggedIn } from "../../features/Auth";
 import { todolistsActions } from '../../features/Todolist'
-import { useActions } from "../../utils/redux-utils";
+import { useActions } from "../../hooks/useActions";
 import { selectTodolists } from "../../features/Todolist";
 import { theme } from "../../app/App";
 import { AnimatePresence } from "framer-motion";

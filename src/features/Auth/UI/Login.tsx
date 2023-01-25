@@ -12,7 +12,7 @@ import { useAppSelector } from "../../../state/store";
 import { Navigate } from "react-router-dom";
 import s from "./Login.module.css"
 import { selectIsAuthPending, selectIsLoggedIn } from "../";
-import { useActions } from "../../../utils/redux-utils";
+import { useActions } from "../../../hooks/useActions";
 import { authActions } from "../index";
 
 export const Login = () => {

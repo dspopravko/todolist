@@ -4,7 +4,7 @@ import { useAppSelector } from "../../state/store";
 import s from "./Navbar.module.css"
 import { selectStatus } from "../../features/Application";
 import { selectIsLoggedIn, selectUserName } from "../../features/Auth";
-import { useActions } from "../../utils/redux-utils";
+import { useActions } from "../../hooks/useActions";
 import { authActions } from "../../features/Auth";
 import { theme } from "../../app/App";
 

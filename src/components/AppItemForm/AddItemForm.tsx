@@ -17,7 +17,7 @@ export const AddItemForm = ({ addItem, disabled = false }: AddItemFormPropsType)
     setInput(event.currentTarget.value)
   }
 
-  const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addTask()
+  const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => e.ctrlKey && e.key === 'Enter' && addTask()
 
   const addTask = useCallback(() => {
     if (disabled) return
@@ -39,10 +39,14 @@ export const AddItemForm = ({ addItem, disabled = false }: AddItemFormPropsType)
           onKeyDown={onKeyDownHandler}
           error={error}
           helperText={error && "Title is required"}
+          multiline
         />
       </div>
       <div className={s.button}>
         <IconButton
+          style={{
+            transition: '0.1s ease'
+          }}
           onClick={addTask}>
           <AddCircleIcon style={disabled ? { color: theme.palette.grey.A200 } : { color: theme.palette.primary.main }} />
         </IconButton>

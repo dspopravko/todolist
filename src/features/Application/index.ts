@@ -1,10 +1,10 @@
 import * as appSelectors from './BLL/appSelectors'
-import { appActions as A1, appReducer, appCaseReducer } from "./BLL/appSlice";
-import { asyncActions } from "./BLL/appAsyncThunk";
+import { appActions as appSyncActions, appReducer, appCaseReducer } from "./BLL/appSlice";
+import { appAsyncActions } from "./BLL/appAsyncThunk";
 
 const appActions = {
-  ...A1,
-  ...asyncActions
+  ...appSyncActions,
+  ...appAsyncActions
 }
 
 export * from './BLL/appSelectors'

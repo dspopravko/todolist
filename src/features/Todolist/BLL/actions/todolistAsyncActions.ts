@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { tdType } from "../../../../models/MTodolist";
 import { ThunkError } from "../../../../state/store";
 import { todolist } from "../../../../api";
-import { handleServerAppError, handleServerNetworkError } from "../../../../utils/error-utils";
+import { handleServerAppError, handleServerNetworkError } from "../../../../utils/handeAsyncError";
 import { AxiosError } from "axios";
 import { TodolistType } from "../slices/todolistSlice";
 
@@ -59,7 +59,7 @@ const removeTodolist = createAsyncThunk<{ todolistId: string }, { todolistId: st
       return handleServerNetworkError(error, thunkAPI)
     }
   })
-export const asyncActions = {
+export const todolistAsyncActions = {
   getTodolists,
   changeTodolistTitle,
   addTodolist,

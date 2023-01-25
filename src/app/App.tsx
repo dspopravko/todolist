@@ -8,7 +8,6 @@ import { TodolistPage } from "../pages/Todolist/TodolistPage";
 import { Login } from "../features/Auth";
 import { Navbar } from "../layout/Navbar/Navbar";
 import { NotFound } from "../pages/NotFound/NotFound";
-import { ProgressBar } from "../components/ProgressBar/ProgressBar";
 import { AppLoader } from "../layout/AppLoader/AppLoader";
 
 export const theme = createTheme({
@@ -21,7 +20,6 @@ export const theme = createTheme({
     },
   }
 })
-
 export const App = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -39,7 +37,6 @@ export const App = () => {
               <Route path='*' element={<Navigate to={'/404'} />} />
             </Routes>
           </Container>
-          <ProgressBar/>
         </AppLoader>
       </div>
 

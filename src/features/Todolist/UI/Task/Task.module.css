@@ -8,7 +8,7 @@
     align-items: center;
     justify-content: flex-start;
 }
-.btnWrapper {
+.deleteButtonContainer {
     align-self: center;
     margin-left: 6px;
 }

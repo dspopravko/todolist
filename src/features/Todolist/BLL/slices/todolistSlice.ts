@@ -1,11 +1,11 @@
 import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
 import { tdType } from "../../../../models/MTodolist";
 import { entityStatus } from "../../../../models/MEntityStatus";
-import { asyncActions } from "../actions/todolistAsyncActions";
+import { todolistAsyncActions } from "../actions/todolistAsyncActions";
 import { FilterValuesType } from "../../../../models/MFilterValues";
-import { tasksActions } from "../../index";
+import { tasksAsyncActions} from "../actions/taskAsyncActions";
 
-const { changeTodolistTitle, removeTodolist, addTodolist, getTodolists } = asyncActions
+const { changeTodolistTitle, removeTodolist, addTodolist, getTodolists } = todolistAsyncActions
 
 export type TodolistType = tdType & {
   filter: FilterValuesType
@@ -63,18 +63,18 @@ const todolistSlice = createSlice({
       })
       .addMatcher(isAnyOf(
         changeTodolistTitle.pending,
-        tasksActions.addTask.pending,
-        tasksActions.updateTask.pending,
-        tasksActions.removeTask.pending
+        tasksAsyncActions.addTask.pending,
+        tasksAsyncActions.updateTask.pending,
+        tasksAsyncActions.removeTask.pending
       ), (state, action) => {
         const index = state.findIndex((td) => td.id === action.meta.arg.todolistId)
         state[index].tdStatus = entityStatus.loading
       })
       .addMatcher(isAnyOf(
         changeTodolistTitle.fulfilled, changeTodolistTitle.rejected,
-        tasksActions.addTask.fulfilled, tasksActions.addTask.rejected,
-        tasksActions.updateTask.fulfilled, tasksActions.updateTask.rejected,
-        tasksActions.removeTask.fulfilled, tasksActions.updateTask.rejected,
+        tasksAsyncActions.addTask.fulfilled, tasksAsyncActions.addTask.rejected,
+        tasksAsyncActions.updateTask.fulfilled, tasksAsyncActions.updateTask.rejected,
+        tasksAsyncActions.removeTask.fulfilled, tasksAsyncActions.updateTask.rejected,
       ), (state, action) => {
         const index = state.findIndex((td) => td.id === action.meta.arg.todolistId)
         state[index].tdStatus = entityStatus.idle

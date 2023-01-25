@@ -5,7 +5,7 @@ import { EditableSpan } from "../../../../components/EditableSpan/EditableSpan";
 import BackspaceIcon from "@material-ui/icons/Backspace";
 import { TaskType } from "../../../../models/MTask";
 import { TaskStatus } from "../../../../models/MTaskStatus";
-import { useActions } from "../../../../utils/redux-utils";
+import { useActions } from "../../../../hooks/useActions";
 import { entityStatus } from "../../../../models/MEntityStatus";
 import { tasksActions } from "../../index";
 import { theme } from "../../../../app/App";
@@ -35,7 +35,20 @@ export const Task = ({ title, id, status, todoId, tdStatus }: TaskPropsType) => 
   const onChangeTitleHandler = (title: string) => updateTask({ todolistId: todoId, taskId: id, status, title })
 
   return (
-    <motion.div layoutId={'task' + id} className={s.container}>
+    <motion.div
+      layoutId={'task' + id}
+      className={s.container}
+      initial={{
+        opacity:0
+      }}
+      animate={{
+        opacity: 1,
+      }}
+      exit={{
+        opacity: 0,
+        transition: {duration: 0.2}
+      }}
+    >
       <div className={s.task} style={formatTaskOnStatus(status)}>
         <div>
           <Checkbox
@@ -51,12 +64,15 @@ export const Task = ({ title, id, status, todoId, tdStatus }: TaskPropsType) => 
           />
         </div>
       </div>
-      <div className={s.btnWrapper}>
+      <div className={s.deleteButtonContainer}>
         <IconButton
           disabled={tdStatus === entityStatus.loading}
           color={"primary"}
           size="small"
-          onClick={onRemoveHandler}>
+          onClick={onRemoveHandler}
+          style={{
+            transition: '0.1s ease'
+          }}>
           <BackspaceIcon />
         </IconButton>
       </div>

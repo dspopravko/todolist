@@ -3,7 +3,7 @@ import { TaskType } from "../../../../models/MTask";
 import { AppRootStateType, ThunkError } from "../../../../state/store";
 import { taskAPI } from "../../../../api";
 import { AxiosError } from "axios";
-import { handleServerAppError, handleServerNetworkError } from "../../../../utils/error-utils";
+import { handleServerAppError, handleServerNetworkError } from "../../../../utils/handeAsyncError";
 import { TaskStatus } from "../../../../models/MTaskStatus";
 import { UpdateTaskModelType } from "../../../../models/MUpdateTask";
 
@@ -74,7 +74,7 @@ const updateTask = createAsyncThunk('tasks/updateTask',
     }
   })
 
-export const asyncActions = {
+export const tasksAsyncActions = {
   getTasks,
   removeTask,
   addTask,

@@ -8,12 +8,12 @@ import { useSelector } from "react-redux";
 import { AppRootStateType } from "../../../../state/store";
 import { Task } from "../Task/Task";
 import { TaskType } from "../../../../models/MTask";
-import { useActions } from "../../../../utils/redux-utils";
+import { useActions } from "../../../../hooks/useActions";
 import { tasksActions, todolistsActions } from "../../index";
 import { entityStatus } from "../../../../models/MEntityStatus";
 import { FilterValuesType } from "../../../../models/MFilterValues";
 import { theme } from "../../../../app/App";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 type PropsType = {
   tdID: string
@@ -70,24 +70,26 @@ export const Todolist = memo(({ tdID, filter, title, entityStatus: status }: Pro
       />
 
       <div className={s.tasksList}>
-        {filteredTasks?.map(task => {
-          return <Task
-            key={task.id}
-            id={task.id}
-            title={task.title}
-            todoId={tdID}
-            status={task.status}
-            description={task.description}
-            addedDate={task.addedDate}
-            deadline={task.deadline}
-            todoListId={task.todoListId}
-            order={task.order}
-            priority={task.priority}
-            startDate={task.startDate}
-            tdStatus={status}
-          />
-        })}
-        {filteredTasks && filteredTasks.length < 1 ? "Task list is empty" : ""}
+        <AnimatePresence>
+          {filteredTasks?.map(task => {
+            return <Task
+              key={task.id}
+              id={task.id}
+              title={task.title}
+              todoId={tdID}
+              status={task.status}
+              description={task.description}
+              addedDate={task.addedDate}
+              deadline={task.deadline}
+              todoListId={task.todoListId}
+              order={task.order}
+              priority={task.priority}
+              startDate={task.startDate}
+              tdStatus={status}
+            />
+          })}
+          {filteredTasks && filteredTasks.length < 1 && <motion.p layoutId={'empty'}>Task list is empty</motion.p>}
+        </AnimatePresence>
       </div>
 
       <div className={s.filter}>
