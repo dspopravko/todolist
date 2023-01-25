@@ -5,14 +5,14 @@ import * as serviceWorker from './serviceWorker';
 import { App } from "./app/App";
 import { store } from "./state/store";
 import { Provider } from "react-redux";
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   </Provider>
 );
 
