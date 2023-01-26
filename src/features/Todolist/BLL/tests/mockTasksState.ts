@@ -1,13 +1,17 @@
-import { TaskStatus } from "../../../../models/MTaskStatus";
-import { Priority } from "../../../../models/MPriority";
-import { TasksStateType } from "../slices/tasksSlice";
+import { TaskStatus } from '../../../../models/MTaskStatus'
+import { Priority } from '../../../../models/MPriority'
+import { TasksStateType } from '../slices/tasksSlice'
 
-export const mockTasksState = (todolistId1: string, todolistId2: string, todolistId3: string): TasksStateType => {
+export const mockTasksState = (
+  todolistId1: string,
+  todolistId2: string,
+  todolistId3: string
+): TasksStateType => {
   return {
     [todolistId1]: [
       {
-        id: "1",
-        title: "HTML&CSS",
+        id: '1',
+        title: 'HTML&CSS',
         status: TaskStatus.Completed,
         todoListId: todolistId1,
         addedDate: '',
@@ -15,11 +19,11 @@ export const mockTasksState = (todolistId1: string, todolistId2: string, todolis
         deadline: '',
         description: '',
         order: 0,
-        priority: Priority.Hi
+        priority: Priority.Hi,
       },
       {
-        id: "2",
-        title: "JS",
+        id: '2',
+        title: 'JS',
         status: TaskStatus.Completed,
         todoListId: todolistId1,
         addedDate: '',
@@ -27,11 +31,11 @@ export const mockTasksState = (todolistId1: string, todolistId2: string, todolis
         deadline: '',
         description: '',
         order: 0,
-        priority: Priority.Hi
+        priority: Priority.Hi,
       },
       {
-        id: "3",
-        title: "ReactJS",
+        id: '3',
+        title: 'ReactJS',
         status: TaskStatus.New,
         todoListId: todolistId1,
         addedDate: '',
@@ -39,11 +43,11 @@ export const mockTasksState = (todolistId1: string, todolistId2: string, todolis
         deadline: '',
         description: '',
         order: 0,
-        priority: Priority.Hi
+        priority: Priority.Hi,
       },
       {
-        id: "4",
-        title: "ReactNative",
+        id: '4',
+        title: 'ReactNative',
         status: TaskStatus.Completed,
         todoListId: todolistId1,
         addedDate: '',
@@ -51,13 +55,13 @@ export const mockTasksState = (todolistId1: string, todolistId2: string, todolis
         deadline: '',
         description: '',
         order: 0,
-        priority: Priority.Hi
+        priority: Priority.Hi,
       },
     ],
     [todolistId2]: [
       {
-        id: "1",
-        title: "Soup",
+        id: '1',
+        title: 'Soup',
         status: TaskStatus.New,
         todoListId: todolistId2,
         addedDate: '',
@@ -65,11 +69,11 @@ export const mockTasksState = (todolistId1: string, todolistId2: string, todolis
         deadline: '',
         description: '',
         order: 0,
-        priority: Priority.Hi
+        priority: Priority.Hi,
       },
       {
-        id: "2",
-        title: "Chicken Salad",
+        id: '2',
+        title: 'Chicken Salad',
         status: TaskStatus.Completed,
         todoListId: todolistId2,
         addedDate: '',
@@ -77,11 +81,11 @@ export const mockTasksState = (todolistId1: string, todolistId2: string, todolis
         deadline: '',
         description: '',
         order: 0,
-        priority: Priority.Hi
+        priority: Priority.Hi,
       },
       {
-        id: "3",
-        title: "Tosts",
+        id: '3',
+        title: 'Tosts',
         status: TaskStatus.New,
         todoListId: todolistId2,
         addedDate: '',
@@ -89,11 +93,11 @@ export const mockTasksState = (todolistId1: string, todolistId2: string, todolis
         deadline: '',
         description: '',
         order: 0,
-        priority: Priority.Hi
+        priority: Priority.Hi,
       },
       {
-        id: "4",
-        title: "Beans",
+        id: '4',
+        title: 'Beans',
         status: TaskStatus.Completed,
         todoListId: todolistId2,
         addedDate: '',
@@ -101,13 +105,13 @@ export const mockTasksState = (todolistId1: string, todolistId2: string, todolis
         deadline: '',
         description: '',
         order: 0,
-        priority: Priority.Hi
+        priority: Priority.Hi,
       },
     ],
     [todolistId3]: [
       {
-        id: "1",
-        title: "Camera",
+        id: '1',
+        title: 'Camera',
         status: TaskStatus.New,
         todoListId: todolistId3,
         addedDate: '',
@@ -115,11 +119,11 @@ export const mockTasksState = (todolistId1: string, todolistId2: string, todolis
         deadline: '',
         description: '',
         order: 0,
-        priority: Priority.Hi
+        priority: Priority.Hi,
       },
       {
-        id: "2",
-        title: "Phone",
+        id: '2',
+        title: 'Phone',
         status: TaskStatus.Completed,
         todoListId: todolistId3,
         addedDate: '',
@@ -127,11 +131,11 @@ export const mockTasksState = (todolistId1: string, todolistId2: string, todolis
         deadline: '',
         description: '',
         order: 0,
-        priority: Priority.Hi
+        priority: Priority.Hi,
       },
       {
-        id: "3",
-        title: "Microphone",
+        id: '3',
+        title: 'Microphone',
         status: TaskStatus.New,
         todoListId: todolistId3,
         addedDate: '',
@@ -139,11 +143,11 @@ export const mockTasksState = (todolistId1: string, todolistId2: string, todolis
         deadline: '',
         description: '',
         order: 0,
-        priority: Priority.Hi
+        priority: Priority.Hi,
       },
       {
-        id: "4",
-        title: "Laptop",
+        id: '4',
+        title: 'Laptop',
         status: TaskStatus.Completed,
         todoListId: todolistId3,
         addedDate: '',
@@ -151,10 +155,8 @@ export const mockTasksState = (todolistId1: string, todolistId2: string, todolis
         deadline: '',
         description: '',
         order: 0,
-        priority: Priority.Hi
+        priority: Priority.Hi,
       },
-    ]
+    ],
   }
 }
-
-

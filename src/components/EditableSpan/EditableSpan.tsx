@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { TextField } from "@material-ui/core";
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import { TextField } from '@material-ui/core'
 
 type EditableSpanPropsType = {
   title: string
@@ -7,13 +7,17 @@ type EditableSpanPropsType = {
   disabled?: boolean
 }
 
-export function EditableSpan({ title, onChange, disabled = false }: EditableSpanPropsType) {
+export function EditableSpan({
+  title,
+  onChange,
+  disabled = false,
+}: EditableSpanPropsType) {
   const [editMode, setEditMode] = useState(false)
   const [input, setInput] = useState(title)
 
   useEffect(() => {
-    setInput(title);
-  }, [title]);
+    setInput(title)
+  }, [title])
 
   const activateEditMode = () => {
     if (!disabled) {
@@ -26,14 +30,15 @@ export function EditableSpan({ title, onChange, disabled = false }: EditableSpan
     setInput(title)
     onChange(input)
   }
-  const inputOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setInput(e.currentTarget.value)
+  const inputOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) =>
+    setInput(e.currentTarget.value)
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
       activateViewMode()
     }
   }
-  return editMode
-    ? <TextField
+  return editMode ? (
+    <TextField
       onKeyDown={handleKeyDown}
       onBlur={activateViewMode}
       value={input}
@@ -41,5 +46,7 @@ export function EditableSpan({ title, onChange, disabled = false }: EditableSpan
       autoFocus
       multiline
     />
-    : <span onDoubleClick={activateEditMode}>{input}</span>
+  ) : (
+    <span onDoubleClick={activateEditMode}>{input}</span>
+  )
 }

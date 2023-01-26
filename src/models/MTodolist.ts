@@ -1,7 +1,6 @@
-export type tdType =
-  {
-    id: string,
-    title: string,
-    addedDate: string,
-    order: number
-  }
+export type tdType = {
+  id: string
+  title: string
+  addedDate: string
+  order: number
+}

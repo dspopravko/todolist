@@ -1,19 +1,8 @@
 .mainContainer {
-    margin-top: clamp(20px, 5vh, 40px);
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
-    justify-content: center;
-    justify-items: center;
-}
-.addNewTodolistContainer {
-    box-shadow: var(--shadow);
-    border-radius: var(--borderRadius);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-    height: 100%;
+  margin-top: clamp(20px, 5vh, 40px);
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+  justify-content: center;
+  justify-items: center;
 }

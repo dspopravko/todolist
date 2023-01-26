@@ -1,36 +1,30 @@
-import React, { useCallback, useEffect } from 'react';
-import { Typography } from "@material-ui/core";
-import { AddItemForm } from "../../components/AppItemForm/AddItemForm";
-import { Todolist } from "../../features/Todolist";
-import { useAppSelector } from "../../state/store";
-import { Navigate } from "react-router-dom";
-import s from "./TodolistPage.module.css"
-import { selectIsLoggedIn } from "../../features/Auth";
-import { todolistsActions } from '../../features/Todolist'
-import { useActions } from "../../hooks/useActions";
-import { selectTodolists } from "../../features/Todolist";
-import { theme } from "../../app/App";
-import { AnimatePresence } from "framer-motion";
+import React, { useEffect } from 'react'
+import { Todolist,  todolistsActions, selectTodolists  } from '../../features/Todolist'
+import { useAppSelector } from '../../state/store'
+import { Navigate } from 'react-router-dom'
+import s from './TodolistPage.module.css'
+import { selectIsLoggedIn } from '../../features/Auth'
+import { useActions } from '../../hooks/useActions'
+import { AnimatePresence } from 'framer-motion'
+import { AddTodolist } from '../../features/Todolist/UI/AddTodolist/AddTodolist'
 
-export const TodolistPage = () => {
-  const { getTodolists, addTodolist } = useActions(todolistsActions)
+export const TodolistPage = ({demo}: {demo?: boolean}) => {
+  const { getTodolists } = useActions(todolistsActions)
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const todolists = useAppSelector(selectTodolists)
-  const addTodolistHandler = useCallback((title: string) => addTodolist({ title }), [addTodolist])
 
   useEffect(() => {
-    isLoggedIn && getTodolists()
+    !demo && isLoggedIn && getTodolists()
   }, [isLoggedIn])
-  if (!isLoggedIn) return <Navigate to={"/login"} />
+  if (!isLoggedIn) {
+    return <Navigate to={'/login'} />
+  }
 
   return (
     <div className={s.mainContainer}>
-      <div style={{backgroundColor: theme.palette.background.default}} className={s.addNewTodolistContainer}>
-        <Typography variant="h6">Add new todolist:</Typography>
-        <AddItemForm addItem={addTodolistHandler} />
-      </div>
+      <AddTodolist />
       <AnimatePresence>
-      {todolists?.map(tl => {
+        {todolists?.map((tl) => {
           return (
             <Todolist
               key={tl.id}
@@ -40,9 +34,8 @@ export const TodolistPage = () => {
               entityStatus={tl.tdStatus}
             />
           )
-        }
-      )}
+        })}
       </AnimatePresence>
     </div>
-  );
+  )
 }

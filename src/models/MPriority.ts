@@ -1,7 +1,7 @@
 export enum Priority {
-    Low,
-    Middle,
-    Hi,
-    Urgently,
-    Later
+  Low,
+  Middle,
+  Hi,
+  Urgently,
+  Later,
 }

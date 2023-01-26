@@ -1,0 +1,11 @@
+.addNewTodolistContainer {
+  box-shadow: var(--shadow);
+  border-radius: var(--borderRadius);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  height: 100%;
+}

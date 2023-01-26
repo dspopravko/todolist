@@ -1,9 +1,9 @@
 .inputContainer {
-    grid-area: input;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+  grid-area: input;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 .button {
-    grid-area: addbtn;
+  grid-area: addbtn;
 }

@@ -1,4 +1,4 @@
-import { AppRootStateType } from "../../../state/store";
+import { AppRootStateType } from '../../../state/store'
 
 export const selectUserName = (state: AppRootStateType) => state.auth.user
 export const selectIsLoggedIn = (state: AppRootStateType) => state.auth.isAuth

@@ -1,32 +1,32 @@
 .toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 1440px;
-    margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 .navbar {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
 }
 .user {
-    background: hsla(0, 0%, 100%, 0.45);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 4px;
-    font-weight: bold;
-    height: 30px;
-    color: black;
-    padding: 0 6px 2px 6px;
+  background: hsla(0, 0%, 100%, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  font-weight: bold;
+  height: 30px;
+  color: black;
+  padding: 0 6px 2px 6px;
 }
 .user p {
-    margin: 0;
+  margin: 0;
 }
 .logoutWrapper {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }

@@ -1,6 +1,8 @@
-import { TaskType } from "../models/MTask";
+import { TaskType } from '../models/MTask'
 
-export type ResponseType<T = {}> = {
+// type Nullable<T> = T | null;
+
+export type ResponseType<T> = {
   data: T
   fieldsErrors: string[]
   messages: string[]

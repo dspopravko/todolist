@@ -1,5 +1,5 @@
-import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
-import { initializeApp } from "./appAsyncThunk";
+import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit'
+import { initializeApp } from './appAsyncThunk'
 
 type AppStateType = {
   status: 'idle' | 'loading'
@@ -15,18 +15,27 @@ const appSlice = createSlice({
   name: 'app',
   initialState: initialState,
   reducers: {
-    setAppStatus(state, action: PayloadAction<{ status: AppStateType["status"] }>) {
+    setAppStatus(
+      state,
+      action: PayloadAction<{ status: AppStateType['status'] }>
+    ) {
       state.status = action.payload.status
     },
-    setAppError(state, action: PayloadAction<{ error: AppStateType["error"] }>) {
+    setAppError(
+      state,
+      action: PayloadAction<{ error: AppStateType['error'] }>
+    ) {
       state.error = action.payload.error
-    }
-  }, extraReducers: builder => {
-    builder.addMatcher(isAnyOf(initializeApp.fulfilled, initializeApp.rejected),
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      isAnyOf(initializeApp.fulfilled, initializeApp.rejected),
       (state) => {
         state.status = 'idle'
-      });
-  }
+      }
+    )
+  },
 })
 
 export type AppReducerStateType = typeof initialState
@@ -34,4 +43,3 @@ export type AppReducerStateType = typeof initialState
 export const appReducer = appSlice.reducer
 export const appCaseReducer = appSlice.caseReducers
 export const appActions = appSlice.actions
-

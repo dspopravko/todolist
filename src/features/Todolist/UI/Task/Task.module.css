@@ -1,14 +1,14 @@
 .container {
-    grid-area: tasks;
-    display: grid;
-    grid-template-columns: auto 50px;
+  grid-area: tasks;
+  display: grid;
+  grid-template-columns: auto 50px;
 }
 .task {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 .deleteButtonContainer {
-    align-self: center;
-    margin-left: 6px;
+  align-self: center;
+  margin-left: 6px;
 }

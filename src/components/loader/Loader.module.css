@@ -3,7 +3,7 @@
   height: 48px;
   display: inline-block;
   position: relative;
-  --radius: 6px
+  --radius: 6px;
 }
 .loader::after,
 .loader::before {

@@ -1,0 +1,7 @@
+.container {
+  margin-top: 13px;
+  display: flex;
+  justify-content: center;
+  height: min-content;
+  grid-area: filter;
+}

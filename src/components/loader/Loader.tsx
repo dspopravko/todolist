@@ -12,11 +12,11 @@ export const Loader = ({ size }: { size: 'small' | 'regular' | 'large' }) => {
           'scale(1)': size === 'regular',
           'scale(2)': size === 'large',
         }),
-        ['--radius' as string] : cx({
+        ['--radius' as string]: cx({
           '6px': size === 'small',
           '2px': size === 'regular',
           '1px': size === 'large',
-        })
+        }),
       }}
     ></span>
   )
