@@ -8,13 +8,13 @@ import { useActions } from '../../hooks/useActions'
 import { AnimatePresence } from 'framer-motion'
 import { AddTodolist } from '../../features/Todolist/UI/AddTodolist/AddTodolist'
 
-export const TodolistPage = ({demo}: {demo?: boolean}) => {
+export const TodolistPage = () => {
   const { getTodolists } = useActions(todolistsActions)
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const todolists = useAppSelector(selectTodolists)
 
   useEffect(() => {
-    !demo && isLoggedIn && getTodolists()
+    !process.env.DEMO && isLoggedIn && getTodolists()
   }, [isLoggedIn])
   if (!isLoggedIn) {
     return <Navigate to={'/login'} />

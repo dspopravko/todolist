@@ -46,7 +46,7 @@ const initialGlobalState: AppRootStateType = {
     ['todolistId1']: [
       {
         id: v1(),
-        title: 'HTML&CSS',
+        title: 'T3 stack',
         status: TaskStatus.New,
         todoListId: 'todolistId1',
         addedDate: '',
@@ -58,7 +58,19 @@ const initialGlobalState: AppRootStateType = {
       },
       {
         id: v1(),
-        title: 'JS',
+        title: 'Express',
+        status: TaskStatus.New,
+        todoListId: 'todolistId1',
+        addedDate: '',
+        startDate: '',
+        deadline: '',
+        description: '',
+        order: 0,
+        priority: Priority.Hi,
+      },
+      {
+        id: v1(),
+        title: 'React Native',
         status: TaskStatus.Completed,
         todoListId: 'todolistId1',
         addedDate: '',

@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { TextField } from '@material-ui/core'
+import { Typography } from '@mui/material'
 
 type EditableSpanPropsType = {
   title: string
@@ -47,6 +48,6 @@ export function EditableSpan({
       multiline
     />
   ) : (
-    <span onDoubleClick={activateEditMode}>{input}</span>
+    <Typography onDoubleClick={activateEditMode}>{input}</Typography>
   )
 }

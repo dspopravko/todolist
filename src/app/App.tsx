@@ -20,21 +20,21 @@ export const theme = createTheme({
     },
   },
 })
-export const App = ({demo}: {demo?: boolean}) => {
+export const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
+      <div className='App'>
         <AppLoader>
           <ErrorSnackbar />
-          <AppBar position="static">
+          <AppBar position='static'>
             <Navbar />
           </AppBar>
           <Container>
             <Routes>
-              <Route path="/" element={<TodolistPage demo={demo} />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/404" element={<NotFound />} />
-              <Route path="*" element={<Navigate to={'/404'} />} />
+              <Route path='/' element={<TodolistPage />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/404' element={<NotFound />} />
+              <Route path='*' element={<Navigate to={'/404'} />} />
             </Routes>
           </Container>
         </AppLoader>

@@ -10,9 +10,9 @@ type AddItemFormPropsType = {
 }
 
 export const AddItemForm = ({
-  addItem,
-  disabled = false,
-}: AddItemFormPropsType) => {
+                              addItem,
+                              disabled = false,
+                            }: AddItemFormPropsType) => {
   const [input, setInput] = useState('')
   const [error, setError] = useState<boolean>(false)
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +24,9 @@ export const AddItemForm = ({
     e.ctrlKey && e.key === 'Enter' && addTask()
 
   const addTask = useCallback(() => {
-    if (disabled) {return}
+    if (disabled) {
+      return
+    }
     const mInput = input.trim()
     mInput ? addItem(mInput) : setError(true)
     setInput('')

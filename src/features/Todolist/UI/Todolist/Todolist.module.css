@@ -3,6 +3,7 @@
   border-radius: var(--borderRadius);
   padding: clamp(5px, 1vw, 10px);
   width: 100%;
+  max-width: 400px;
   display: grid;
   grid-template:
     'title button'

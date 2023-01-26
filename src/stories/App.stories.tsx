@@ -10,7 +10,7 @@ export default {
   decorators: [ReduxStoreProviderDecorator, withRouter],
 } as ComponentMeta<typeof App>
 
-const AppTemplate: ComponentStory<typeof App> = () => <App demo />
+const AppTemplate: ComponentStory<typeof App> = () => <App />
 
 export const AppStory = (AppTemplate.bind({}).story = {
   parameters: {

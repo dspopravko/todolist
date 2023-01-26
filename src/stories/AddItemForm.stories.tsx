@@ -17,6 +17,7 @@ const AddItemFormTemplate: ComponentStory<typeof AddItemForm> = (args) => (
 const AddItemFormWithError: ComponentStory<typeof AddItemForm> = (args) => {
   const [input, setInput] = useState('')
   const [error, setError] = useState<boolean>(true)
+
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     error && setError(false)
     setInput(event.currentTarget.value)
@@ -32,7 +33,7 @@ const AddItemFormWithError: ComponentStory<typeof AddItemForm> = (args) => {
   }, [input])
 
   return (
-    <div className={s.titleInput}>
+    <div className={s.inputContainer}>
       <TextField
         variant={'outlined'}
         size={'small'}
@@ -43,6 +44,7 @@ const AddItemFormWithError: ComponentStory<typeof AddItemForm> = (args) => {
         onKeyDown={onKeyDownHandler}
         error={error}
         helperText={error && 'Title is required'}
+        multiline
       />
       <IconButton onClick={addTask}>
         <AddCircleIcon style={{ color: '#9fc4c0', fontSize: 'small' }} />

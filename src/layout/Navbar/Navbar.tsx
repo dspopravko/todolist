@@ -34,7 +34,7 @@ export const Navbar = () => {
             </Button>
             {isLoggedIn && (
               <div className={s.user}>
-                <p>{user}</p>
+                <Typography>{user}</Typography>
               </div>
             )}
           </div>

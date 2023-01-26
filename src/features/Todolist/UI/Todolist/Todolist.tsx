@@ -29,7 +29,7 @@ export const Todolist = memo(
     const { getTasks, addTask } = useActions(tasksActions)
 
     useEffect(() => {
-      getTasks(tdID)
+      !process.env.DEMO && getTasks(tdID)
     }, [tdID])
 
     const tasks = useSelector<AppRootStateType, Array<TaskType>>(

@@ -16,7 +16,7 @@ export const AppLoader = ({ children }: AppLoaderPropsType) => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const { initializeApp } = useActions(appActions)
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!isLoggedIn && !process.env.DEMO) {
       initializeApp()
     }
   }, [])

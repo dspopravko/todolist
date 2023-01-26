@@ -2,6 +2,7 @@
   grid-area: tasks;
   display: grid;
   grid-template-columns: auto 50px;
+  max-width: 400px;
 }
 .task {
   display: flex;

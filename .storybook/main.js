@@ -11,4 +11,8 @@ module.exports = {
   core: {
     builder: '@storybook/builder-webpack5',
   },
+  env: (config) => ({
+    ...config,
+    DEMO: true,
+  }),
 }
