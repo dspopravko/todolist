@@ -46,6 +46,7 @@ export const AddItemForm = ({
           error={error}
           helperText={error && 'Title is required'}
           multiline
+          fullWidth
         />
       </div>
       <div className={s.button}>

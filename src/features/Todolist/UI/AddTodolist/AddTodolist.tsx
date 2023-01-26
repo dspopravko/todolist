@@ -10,15 +10,18 @@ export const AddTodolist = () => {
   const { addTodolist } = useActions(todolistsActions)
   const addTodolistHandler = useCallback(
     (title: string) => addTodolist({ title }),
-    [addTodolist]
+    [addTodolist],
   )
   return (
     <div
       style={{ backgroundColor: theme.palette.background.default }}
       className={s.addNewTodolistContainer}
     >
-      <Typography variant="h6">Add new todolist:</Typography>
-      <AddItemForm addItem={addTodolistHandler} />
+      <Typography variant='h6'>Add new todolist:</Typography>
+      <div className={s.inputContainer}>
+
+        <AddItemForm addItem={addTodolistHandler} />
+      </div>
     </div>
   )
 }

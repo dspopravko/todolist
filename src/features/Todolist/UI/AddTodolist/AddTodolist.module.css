@@ -11,3 +11,6 @@
   padding: 20px;
   height: 100%;
 }
+.inputContainer {
+  display: flex;
+}
